@@ -13,13 +13,9 @@ const Footer = () => {
           viewport={{ once: true }}
           className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0"
         >
-          <div className="text-gray-500 text-sm">
-            © {new Date().getFullYear()} Sang Park. All rights reserved.
-          </div>
-          
-          <div className="text-gray-500 text-sm">
-            Built with Next.js, TypeScript & Tailwind CSS
-          </div>
+          <p className="text-gray-500">
+            © 2024 Sang Park. All rights reserved.
+          </p>
         </motion.div>
       </div>
     </footer>

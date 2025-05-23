@@ -6,7 +6,7 @@ const Contact = () => {
   const socialLinks = [
     {
       name: 'Email',
-      href: 'mailto:hello@sangpark.com',
+      href: 'mailto:sang@foxrain.ai',
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -68,10 +68,10 @@ const Contact = () => {
             className="mb-12"
           >
             <a
-              href="mailto:hello@sangpark.com"
+              href="mailto:sang@foxrain.ai"
               className="inline-flex items-center space-x-3 text-2xl md:text-3xl font-light text-white hover:text-gray-300 transition-colors"
             >
-              <span>hello@sangpark.com</span>
+              <span>sang@foxrain.ai</span>
               <motion.svg
                 className="w-6 h-6"
                 fill="none"
