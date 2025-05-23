@@ -53,12 +53,11 @@ const Contact = () => {
           className="max-w-4xl mx-auto text-center"
         >
           <h2 className="text-4xl md:text-5xl font-light mb-6">
-            <span className="text-gradient">Let's Connect</span>
+            <span className="text-gradient">Let&apos;s Connect</span>
           </h2>
           
-          <p className="text-lg text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Always interested in new opportunities, collaborations, and conversations. 
-            Whether you have a project in mind or just want to chat about technology and product development.
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+            Let&apos;s connect and explore opportunities to build something amazing together.
           </p>
 
           <motion.div

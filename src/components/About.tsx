@@ -25,12 +25,12 @@ const About = () => {
               viewport={{ once: true }}
             >
               <div className="prose-dark">
-                <p className="text-lg leading-relaxed mb-6">
-                  I'm an entrepreneur, engineer, and product manager focused on building useful, thoughtful products quickly. I care about execution — getting things out the door, learning from real users, and refining fast.
+                <p className="text-lg text-gray-400 leading-relaxed mb-6">
+                  I&apos;m an entrepreneur, engineer, and product manager focused on building useful, thoughtful products quickly. I care about execution — getting things out the door, learning from real users, and refining fast.
                 </p>
                 
-                <p className="text-lg leading-relaxed mb-6">
-                  Much of my work centers on solving practical problems with simple tools, from AI-powered content and resume platforms to product discovery and quiz-based experiences. Whether it's a solo build or a team effort, I aim for clarity, speed, and impact.
+                <p className="text-lg text-gray-400 leading-relaxed mb-6">
+                  My background spans startups, enterprise software, and consumer apps. I&apos;ve built everything from mobile games to productivity tools to personality and quiz-based experiences. Whether it&apos;s a solo build or a team effort, I aim for clarity, speed, and impact.
                 </p>
 
                 <p className="text-lg leading-relaxed">

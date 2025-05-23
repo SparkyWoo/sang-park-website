@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 const Hero = () => {
@@ -8,12 +8,12 @@ const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const texts = [
+  const texts = useMemo(() => [
     'Product Engineer',
     'Builder',
     'Creator',
     'Problem Solver'
-  ];
+  ], []);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -26,15 +26,15 @@ const Hero = () => {
       }
 
       if (!isDeleting && currentText === current) {
-        setTimeout(() => setIsDeleting(true), 2000);
+        setTimeout(() => setIsDeleting(true), 1500);
       } else if (isDeleting && currentText === '') {
         setIsDeleting(false);
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % texts.length);
+        setCurrentIndex((prev) => (prev + 1) % texts.length);
       }
     }, isDeleting ? 50 : 100);
 
     return () => clearTimeout(timeout);
-  }, [currentText, isDeleting, currentIndex, texts]);
+  }, [currentText, currentIndex, isDeleting, texts]);
 
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center section-padding">

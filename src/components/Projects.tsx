@@ -85,7 +85,7 @@ const Projects = () => {
             <span className="text-gradient">Projects</span>
           </h2>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            A collection of products and experiments I've built to solve real problems and explore new ideas.
+            A collection of products and experiments I&apos;ve built to solve real problems and explore new ideas.
           </p>
         </motion.div>
 
@@ -174,7 +174,7 @@ const Projects = () => {
             className="inline-flex items-center space-x-2 text-white hover:text-gray-300 transition-colors"
             whileHover={{ y: -2 }}
           >
-            <span>Let's build something together</span>
+            <span>Let&apos;s build something together</span>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
