@@ -10,7 +10,7 @@ const Photography = () => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
-  // Placeholder photos - replace with actual photography
+  // Photography collection - add your photos here
   const photos = [
     {
       src: '/images/photography/photo-1.jpg',
@@ -86,8 +86,19 @@ const Photography = () => {
               onClick={() => openLightbox(index)}
             >
               <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-800">
-                {/* Placeholder for actual photos */}
-                <div className="absolute inset-0 flex items-center justify-center text-gray-500">
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  onError={(e) => {
+                    // Fallback to placeholder if image doesn't exist
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+                
+                {/* Fallback placeholder for missing images */}
+                <div className="absolute inset-0 flex items-center justify-center text-gray-500 bg-gray-800">
                   <div className="text-center">
                     <svg className="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
@@ -128,16 +139,19 @@ const Photography = () => {
           <p className="text-gray-400 mb-6">
             More photography coming soon. Always exploring new perspectives.
           </p>
-          <motion.button
+          <motion.a
+            href="https://www.flickr.com/photos/69237709@N05/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center space-x-2 px-6 py-3 border border-gray-700 rounded-lg text-white hover:border-gray-600 hover:bg-gray-900/40 transition-all duration-300"
             whileHover={{ y: -2 }}
             whileTap={{ y: 0 }}
           >
-            <span>View Full Portfolio</span>
+            <span>View Full Portfolio on Flickr</span>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
-          </motion.button>
+          </motion.a>
         </motion.div>
       </div>
 
