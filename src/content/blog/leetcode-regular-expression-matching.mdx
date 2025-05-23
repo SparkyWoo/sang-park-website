@@ -1,0 +1,193 @@
+---
+title: "[Leetcode] 10. Regular Expression Matching"
+date: "2015-06-03"
+tags: ["leetcode", "algorithms", "python", "dynamic programming"]
+excerpt: "Solving an interesting LeetCode problem in Python - finding the maximum difference between successive elements in a sorted array."
+---
+
+I came across an interesting leetcode problem and decided to solve it in Python (a language I'm not comfortable with) for practice. 
+
+Here's the problem: Given an unsorted array, find the maximum difference between the successive elements in its sorted form. Try to solve it in linear time/space. Return 0 if the array contains less than 2 elements.
+
+## Problem Analysis
+
+This is actually LeetCode problem #164 "Maximum Gap", not the regular expression matching problem. The challenge is to solve it in linear time and space complexity.
+
+## Approach
+
+The key insight is to use bucket sort or radix sort to achieve linear time complexity. Here's my approach:
+
+### Bucket Sort Solution
+
+```python
+def maximum_gap(nums):
+    """
+    Find the maximum gap between successive elements in sorted form.
+    
+    Args:
+        nums: List of integers
+    
+    Returns:
+        int: Maximum gap between successive elements
+    """
+    if len(nums) < 2:
+        return 0
+    
+    # Find min and max values
+    min_val = min(nums)
+    max_val = max(nums)
+    
+    # If all elements are the same
+    if min_val == max_val:
+        return 0
+    
+    n = len(nums)
+    # Calculate bucket size
+    bucket_size = max(1, (max_val - min_val) // (n - 1))
+    bucket_count = (max_val - min_val) // bucket_size + 1
+    
+    # Initialize buckets
+    buckets = [[float('inf'), float('-inf')] for _ in range(bucket_count)]
+    
+    # Place elements in buckets
+    for num in nums:
+        bucket_idx = (num - min_val) // bucket_size
+        buckets[bucket_idx][0] = min(buckets[bucket_idx][0], num)  # min
+        buckets[bucket_idx][1] = max(buckets[bucket_idx][1], num)  # max
+    
+    # Find maximum gap
+    max_gap = 0
+    prev_max = min_val
+    
+    for bucket in buckets:
+        if bucket[0] == float('inf'):  # empty bucket
+            continue
+        
+        # Gap between previous bucket's max and current bucket's min
+        max_gap = max(max_gap, bucket[0] - prev_max)
+        prev_max = bucket[1]
+    
+    return max_gap
+
+# Test cases
+test_cases = [
+    [3, 6, 9, 1],      # Expected: 3
+    [10],              # Expected: 0
+    [1, 1, 1, 1],      # Expected: 0
+    [1, 10000000],     # Expected: 9999999
+]
+
+for i, nums in enumerate(test_cases):
+    result = maximum_gap(nums)
+    print(f"Test case {i + 1}: {nums} -> {result}")
+```
+
+## Algorithm Explanation
+
+### Why Bucket Sort?
+
+The key insight is that in the optimal solution, the maximum gap will never occur within a bucket, but only between buckets. This is because:
+
+1. We divide the range into `n-1` buckets (where `n` is the number of elements)
+2. By pigeonhole principle, at least one bucket will be empty
+3. The maximum gap must span across an empty bucket
+
+### Time Complexity: O(n)
+- Finding min/max: O(n)
+- Placing elements in buckets: O(n)
+- Finding maximum gap: O(n)
+
+### Space Complexity: O(n)
+- Bucket storage: O(n)
+
+## Alternative Approach: Radix Sort
+
+```python
+def maximum_gap_radix(nums):
+    """
+    Alternative solution using radix sort.
+    """
+    if len(nums) < 2:
+        return 0
+    
+    # Radix sort implementation
+    def radix_sort(arr):
+        if not arr:
+            return arr
+        
+        # Find maximum number to determine number of digits
+        max_num = max(arr)
+        
+        # Counting sort for each digit
+        exp = 1
+        while max_num // exp > 0:
+            counting_sort_by_digit(arr, exp)
+            exp *= 10
+        
+        return arr
+    
+    def counting_sort_by_digit(arr, exp):
+        n = len(arr)
+        output = [0] * n
+        count = [0] * 10
+        
+        # Count occurrences of each digit
+        for num in arr:
+            digit = (num // exp) % 10
+            count[digit] += 1
+        
+        # Calculate cumulative count
+        for i in range(1, 10):
+            count[i] += count[i - 1]
+        
+        # Build output array
+        for i in range(n - 1, -1, -1):
+            digit = (arr[i] // exp) % 10
+            output[count[digit] - 1] = arr[i]
+            count[digit] -= 1
+        
+        # Copy back to original array
+        for i in range(n):
+            arr[i] = output[i]
+    
+    # Sort the array
+    sorted_nums = radix_sort(nums[:])  # Create a copy
+    
+    # Find maximum gap
+    max_gap = 0
+    for i in range(1, len(sorted_nums)):
+        max_gap = max(max_gap, sorted_nums[i] - sorted_nums[i - 1])
+    
+    return max_gap
+```
+
+## Key Insights
+
+### 1. Pigeonhole Principle
+The bucket sort approach leverages the pigeonhole principle to guarantee that the maximum gap occurs between buckets, not within them.
+
+### 2. Linear Time Sorting
+Both bucket sort and radix sort can achieve O(n) time complexity for integer arrays, making this problem solvable in linear time.
+
+### 3. Space-Time Tradeoff
+We use O(n) extra space to achieve O(n) time complexity, which is optimal for this problem.
+
+## Learning Points
+
+### Python Practice
+This problem helped me practice:
+- List comprehensions
+- Built-in functions like `min()`, `max()`
+- Float infinity values
+- Array manipulation
+
+### Algorithm Design
+- Understanding when linear time sorting is possible
+- Applying mathematical principles (pigeonhole) to algorithm design
+- Recognizing patterns in gap problems
+
+## Conclusion
+
+This problem demonstrates how mathematical insights can lead to elegant algorithmic solutions. The bucket sort approach is particularly clever in how it uses the pigeonhole principle to guarantee correctness while achieving optimal time complexity.
+
+The key takeaway is that sometimes the optimal solution requires thinking beyond traditional sorting algorithms and leveraging problem-specific properties. 

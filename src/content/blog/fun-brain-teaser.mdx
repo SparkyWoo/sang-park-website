@@ -1,0 +1,112 @@
+---
+title: "Fun Brain Teaser"
+date: "2014-04-01"
+tags: ["brain teaser", "logic", "probability", "puzzle"]
+excerpt: "A challenging brain teaser about Alice and Bob analyzing a tournament between 256 contestants - can you solve it?"
+---
+
+Alice and Bob are both very interested in the results of a tournament held between 256 contestants. They have spent the past few weeks learning everything about the contestants, their strengths and weaknesses, etc. They don't know what the match-ups are going to be before the tournament begins (it is decided by lottery).
+
+Alice manages to correctly predict the winner of every single match in the tournament. Bob manages to correctly predict the winner of every single match except for the final match (he gets that one wrong).
+
+**Question**: Who is more likely to have been guessing randomly?
+
+## Initial Analysis
+
+This is a fascinating probability puzzle that challenges our intuition about randomness and statistical significance.
+
+Let's break down what happened:
+- **Alice**: Predicted all matches correctly
+- **Bob**: Predicted all matches correctly except the final one
+
+At first glance, it might seem like Bob is more likely to have been guessing randomly since he got one wrong. But let's dig deeper.
+
+## Mathematical Analysis
+
+### Tournament Structure
+A tournament with 256 contestants follows a single-elimination bracket:
+- Round 1: 256 → 128 (128 matches)
+- Round 2: 128 → 64 (64 matches)
+- Round 3: 64 → 32 (32 matches)
+- Round 4: 32 → 16 (16 matches)
+- Round 5: 16 → 8 (8 matches)
+- Round 6: 8 → 4 (4 matches)
+- Round 7: 4 → 2 (2 matches)
+- Round 8: 2 → 1 (1 match - the final)
+
+**Total matches**: 255
+
+### Probability Calculations
+
+#### Alice's Performance
+Alice got all 255 matches correct.
+
+If guessing randomly:
+P(Alice's result) = (1/2)^255 ≈ 1.7 × 10^-77
+
+This is an astronomically small probability.
+
+#### Bob's Performance
+Bob got 254 matches correct and 1 match wrong.
+
+If guessing randomly:
+P(Bob's result) = C(255,1) × (1/2)^255 = 255 × (1/2)^255 ≈ 4.3 × 10^-75
+
+Where C(255,1) represents the number of ways to choose which 1 match to get wrong out of 255 total matches.
+
+## The Surprising Answer
+
+**Bob is more likely to have been guessing randomly!**
+
+Even though Bob got one match wrong, his result is actually 255 times more likely than Alice's result if both were guessing randomly.
+
+### Why This Makes Sense
+
+The key insight is that there are many ways to get exactly 254 out of 255 matches correct (you can get any one of the 255 matches wrong), but there's only one way to get all 255 matches correct.
+
+From a statistical perspective:
+- Alice's perfect performance is so unlikely that it suggests she had genuine knowledge
+- Bob's near-perfect performance, while still extremely unlikely, is more consistent with random guessing than Alice's result
+
+## Deeper Implications
+
+### Statistical Significance
+This puzzle illustrates an important principle in statistics: sometimes a "worse" performance can actually be more likely under the null hypothesis (random guessing) than a "better" performance.
+
+### Real-World Applications
+This type of reasoning applies to:
+- **Academic testing**: Perfect scores might indicate cheating more than near-perfect scores
+- **Sports betting**: Consistently perfect predictions are more suspicious than near-perfect ones
+- **Scientific experiments**: Results that are "too good" might indicate data manipulation
+
+### The Paradox of Perfection
+Perfect performance can sometimes be evidence against randomness, while imperfect performance might be more consistent with chance.
+
+## Alternative Interpretations
+
+### Skill vs. Luck
+Another way to think about this:
+- Alice's performance suggests either incredible skill or incredible luck
+- Bob's performance suggests good skill with one mistake, or very good luck with one unlucky guess
+
+### Bayesian Perspective
+Using Bayesian reasoning:
+- Prior belief: Most people don't have perfect tournament prediction ability
+- Alice's result: So unlikely under random guessing that it strongly suggests skill
+- Bob's result: Still very unlikely under random guessing, but less so than Alice's
+
+## The Lesson
+
+This brain teaser teaches us that:
+1. **Intuition can be misleading** in probability problems
+2. **Perfect performance** can be more suspicious than near-perfect performance
+3. **Context matters** when evaluating the likelihood of events
+4. **Statistical thinking** often contradicts common sense
+
+## Solution Summary
+
+While both Alice and Bob's performances are extremely unlikely if they were guessing randomly, Bob's result is 255 times more probable than Alice's under the assumption of random guessing.
+
+Therefore, **Bob is more likely to have been guessing randomly**, even though he performed "worse" than Alice.
+
+This counterintuitive result highlights the importance of considering all possible outcomes when calculating probabilities, not just the specific outcome that occurred. 
