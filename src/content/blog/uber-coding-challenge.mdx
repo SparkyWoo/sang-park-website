@@ -1,0 +1,70 @@
+---
+title: "[Challenge] Uber coding challenge"
+date: "2016-06-14"
+tags: ["coding", "algorithms", "uber", "challenge"]
+excerpt: "A look at an interesting Uber coding challenge involving finding the shortest path in a perfect square grid city."
+---
+
+Consider a city where the streets are perfectly laid out to form an infinite square grid. In this city finding the shortest path between two given points (an origin and a destination) is much easier than in other more complex cities. 
+
+As a new Uber developer, you are tasked to create an algorithm that does exactly that.
+
+## The Problem
+
+Given two points in an infinite square grid, find the shortest path between them. This is a classic problem that tests understanding of coordinate geometry and optimization.
+
+## Approach
+
+In a perfect square grid, the shortest path between two points is simply the Manhattan distance - the sum of the absolute differences of their coordinates.
+
+### Manhattan Distance Formula
+
+For two points (x₁, y₁) and (x₂, y₂), the Manhattan distance is:
+```
+distance = |x₂ - x₁| + |y₂ - y₁|
+```
+
+## Implementation
+
+```python
+def shortest_path(origin, destination):
+    """
+    Calculate the shortest path between two points in a square grid.
+    
+    Args:
+        origin: tuple (x1, y1) representing the starting point
+        destination: tuple (x2, y2) representing the ending point
+    
+    Returns:
+        int: The shortest distance between the two points
+    """
+    x1, y1 = origin
+    x2, y2 = destination
+    
+    return abs(x2 - x1) + abs(y2 - y1)
+
+# Example usage
+origin = (0, 0)
+destination = (3, 4)
+distance = shortest_path(origin, destination)
+print(f"Shortest path from {origin} to {destination}: {distance}")
+```
+
+## Why This Works
+
+In a square grid, you can only move in four directions: up, down, left, and right. Unlike Euclidean distance (straight line), you must follow the grid lines. The Manhattan distance gives us the minimum number of steps needed.
+
+## Real-World Applications
+
+This type of problem is fundamental to:
+- GPS navigation systems
+- Robotics path planning
+- Game development (tile-based games)
+- Urban planning and logistics
+
+## Complexity Analysis
+
+- **Time Complexity**: O(1) - constant time calculation
+- **Space Complexity**: O(1) - only storing coordinate differences
+
+This elegant solution demonstrates how sometimes the most efficient approach is also the simplest one. 
