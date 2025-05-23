@@ -26,20 +26,15 @@ const About = () => {
             >
               <div className="prose-dark">
                 <p className="text-lg leading-relaxed mb-6">
-                  [Placeholder Bio] I'm a Product Engineer passionate about building meaningful products 
-                  that solve real problems. With a background in both technical development and product 
-                  strategy, I bridge the gap between what's possible and what's needed.
+                  I'm an entrepreneur, engineer, and product manager focused on building useful, thoughtful products quickly. I care about execution — getting things out the door, learning from real users, and refining fast.
                 </p>
                 
                 <p className="text-lg leading-relaxed mb-6">
-                  My journey spans across various domains - from developing LeetProduct (LeetCode for PMs) 
-                  to exploring the intersection of technology and creativity through photography and writing.
+                  Much of my work centers on solving practical problems with simple tools, from AI-powered content and resume platforms to product discovery and quiz-based experiences. Whether it's a solo build or a team effort, I aim for clarity, speed, and impact.
                 </p>
 
                 <p className="text-lg leading-relaxed">
-                  When I'm not building products, you'll find me capturing moments through my lens, 
-                  writing about technology and product development, or exploring new ways to create 
-                  value through code.
+                  Outside of product work, I spend time on photography and writing — both as creative outlets and ways to sharpen how I think and communicate.
                 </p>
               </div>
             </motion.div>
@@ -56,19 +51,23 @@ const About = () => {
                 <ul className="space-y-3 text-gray-300">
                   <li className="flex items-center space-x-3">
                     <span className="w-2 h-2 bg-white rounded-full"></span>
-                    <span>Product Engineering & Development</span>
+                    <span>Product Engineering & Iteration</span>
                   </li>
                   <li className="flex items-center space-x-3">
                     <span className="w-2 h-2 bg-white rounded-full"></span>
-                    <span>Full-Stack Application Building</span>
+                    <span>Full-Stack Development</span>
                   </li>
                   <li className="flex items-center space-x-3">
                     <span className="w-2 h-2 bg-white rounded-full"></span>
-                    <span>Product Strategy & Design</span>
+                    <span>Product Strategy & Launch</span>
                   </li>
                   <li className="flex items-center space-x-3">
                     <span className="w-2 h-2 bg-white rounded-full"></span>
-                    <span>Photography & Visual Storytelling</span>
+                    <span>Angel Investing</span>
+                  </li>
+                  <li className="flex items-center space-x-3">
+                    <span className="w-2 h-2 bg-white rounded-full"></span>
+                    <span>Photography & Writing</span>
                   </li>
                 </ul>
               </div>
@@ -76,8 +75,7 @@ const About = () => {
               <div>
                 <h3 className="text-xl font-light mb-4 text-white">Currently</h3>
                 <p className="text-gray-300">
-                  Building innovative products and exploring the future of technology. 
-                  Always open to interesting conversations and collaboration opportunities.
+                  Building innovative products and exploring the future of technology. Always open to interesting conversations and collaboration opportunities.
                 </p>
               </div>
             </motion.div>

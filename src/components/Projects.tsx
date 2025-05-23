@@ -10,24 +10,56 @@ const Projects = () => {
       description: 'LeetCode for Product Managers - A platform designed to help PMs practice and improve their product thinking skills through structured challenges.',
       tech: ['React', 'Node.js', 'PostgreSQL', 'TypeScript'],
       status: 'Live',
-      link: '#',
+      link: 'https://leetproduct.com',
       image: '/images/projects/leetproduct.jpg'
     },
     {
-      title: 'Project Alpha',
-      description: 'An innovative solution for modern workflow automation. Built to streamline complex processes and improve team productivity.',
-      tech: ['Next.js', 'Python', 'AWS', 'Redis'],
-      status: 'In Development',
-      link: '#',
-      image: '/images/projects/project-alpha.jpg'
+      title: 'VariantAB',
+      description: 'AI-powered LinkedIn post analysis tool that helps content creators optimize their posts for better engagement and reach.',
+      tech: ['Next.js', 'OpenAI API', 'Supabase', 'TypeScript'],
+      status: 'Live',
+      link: 'https://www.variantab.com/',
+      image: '/images/projects/variantab.jpg'
     },
     {
-      title: 'Creative Studio',
-      description: 'A digital platform connecting creators with opportunities. Features portfolio management, collaboration tools, and project matching.',
-      tech: ['Vue.js', 'Firebase', 'Stripe', 'Tailwind'],
-      status: 'Concept',
+      title: 'Quizings',
+      description: 'Interactive personality tests and quizzes platform that helps users discover insights about themselves through engaging assessments.',
+      tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
+      status: 'Live',
+      link: 'https://www.quizings.com/',
+      image: '/images/projects/quizings.jpg'
+    },
+    {
+      title: 'BuyWhoa',
+      description: 'Product discovery platform that curates and showcases innovative products, helping users find unique items and brands.',
+      tech: ['Next.js', 'Prisma', 'PostgreSQL', 'Tailwind'],
+      status: 'Live',
+      link: 'https://buywhoa.com/',
+      image: '/images/projects/buywhoa.jpg'
+    },
+    {
+      title: 'ResumeHey',
+      description: 'AI-powered resume optimization tool that helps job seekers improve their resumes with personalized feedback and suggestions.',
+      tech: ['React', 'Python', 'OpenAI API', 'FastAPI'],
+      status: 'Live',
+      link: 'https://www.resumehey.com/',
+      image: '/images/projects/resumehey.jpg'
+    },
+    {
+      title: 'ReactionTimer',
+      description: 'Mobile game that tests and improves reaction time skills through various challenges and exercises. Built for iOS and Android.',
+      tech: ['React Native', 'Expo', 'TypeScript', 'AsyncStorage'],
+      status: 'Live',
       link: '#',
-      image: '/images/projects/creative-studio.jpg'
+      image: '/images/projects/reactiontimer.jpg'
+    },
+    {
+      title: 'WSIE',
+      description: 'Restaurant recommendation app that helps users discover great dining experiences based on their preferences and location.',
+      tech: ['React Native', 'Firebase', 'Google Maps API', 'Redux'],
+      status: 'Live',
+      link: 'https://wsie.app/',
+      image: '/images/projects/wsie.jpg'
     }
   ];
 
@@ -101,10 +133,14 @@ const Projects = () => {
 
                   <motion.a
                     href={project.link}
+                    target={project.link.startsWith('http') ? '_blank' : undefined}
+                    rel={project.link.startsWith('http') ? 'noopener noreferrer' : undefined}
                     className="inline-flex items-center space-x-2 text-white hover:text-gray-300 transition-colors"
                     whileHover={{ x: 5 }}
                   >
-                    <span className="text-sm">View Project</span>
+                    <span className="text-sm">
+                      {project.link.startsWith('http') ? 'Visit Site' : 'View Project'}
+                    </span>
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
