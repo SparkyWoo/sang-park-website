@@ -6,6 +6,9 @@ import Image from 'next/image';
 import AnimationOrchestrator from './AnimationOrchestrator';
 import PhysicsAnimations from './PhysicsAnimations';
 import AmbientAnimations from './AmbientAnimations';
+import { InteractiveTitle } from './InteractiveText';
+import { SectionResponsiveText, HoverResponsiveText } from './DynamicFontWeight';
+import { MagneticText, HighlightText } from './CursorFollowText';
 
 interface Project {
   title: string;
@@ -96,14 +99,21 @@ export default function Projects() {
         {/* Section Header with Orchestrated Animation */}
         <AnimationOrchestrator sequence="text" className="text-center mb-16">
           <AmbientAnimations type="breathing" intensity={0.3} duration={6}>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Featured Projects
-            </h2>
+            <SectionResponsiveText>
+              <InteractiveTitle 
+                variant="section"
+                className="text-4xl md:text-5xl font-bold text-white mb-4"
+              >
+                Featured Projects
+              </InteractiveTitle>
+            </SectionResponsiveText>
           </AmbientAnimations>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            A collection of products I&apos;ve built, from concept to launch. 
-            Each project represents a unique challenge and learning experience.
-          </p>
+          <HighlightText radius={200}>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              A collection of products I&apos;ve built, from concept to launch. 
+              Each project represents a unique challenge and learning experience.
+            </p>
+          </HighlightText>
         </AnimationOrchestrator>
 
         {/* Projects Grid with Staggered Animation */}
@@ -169,14 +179,20 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           {/* Content with Ambient Effects */}
           <div className="p-6 flex-1 flex flex-col">
             <AmbientAnimations type="floating" intensity={0.2} duration={4 + index * 0.3}>
-              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors duration-300">
-                {project.title}
-              </h3>
+              <HoverResponsiveText hoverWeight={600}>
+                <MagneticText radius={50}>
+                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors duration-300">
+                    {project.title}
+                  </h3>
+                </MagneticText>
+              </HoverResponsiveText>
             </AmbientAnimations>
             
-            <p className="text-gray-400 mb-4 flex-1 leading-relaxed">
-              {project.description}
-            </p>
+            <HighlightText radius={100}>
+              <p className="text-gray-400 mb-4 flex-1 leading-relaxed">
+                {project.description}
+              </p>
+            </HighlightText>
 
             {/* Tech Stack with Staggered Physics */}
             <div className="flex flex-wrap gap-2 mb-4">

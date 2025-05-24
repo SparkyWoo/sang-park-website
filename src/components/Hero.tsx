@@ -5,6 +5,9 @@ import { motion } from 'framer-motion';
 import ParticleBackground from './ParticleBackground';
 import AnimationOrchestrator from './AnimationOrchestrator';
 import AmbientAnimations from './AmbientAnimations';
+import { InteractiveTitle } from './InteractiveText';
+import { HoverResponsiveText, ProximityResponsiveText } from './DynamicFontWeight';
+import { FollowingText } from './CursorFollowText';
 
 export default function Hero() {
   const [displayText, setDisplayText] = useState('');
@@ -41,9 +44,6 @@ export default function Hero() {
     return () => clearTimeout(timeout);
   }, [displayText, currentIndex, isDeleting]);
 
-  // Split name into individual letters for animation
-  const nameLetters = "Sang Park".split('');
-
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Particle Background with ambient breathing */}
@@ -64,49 +64,23 @@ export default function Hero() {
         {/* Background Element for Phase 1 */}
         <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/5 to-purple-500/5 blur-3xl scale-150" />
         
-        {/* Name with Letter-by-Letter Reveal - Phase 2 */}
+        {/* Interactive Name - Phase 2 */}
         <div className="mb-6">
-          <h1 className="text-6xl md:text-8xl font-bold text-white mb-2 perspective-1000">
-            {nameLetters.map((letter, index) => (
-              <motion.span
-                key={index}
-                className="inline-block"
-                initial={{ 
-                  opacity: 0, 
-                  y: 50, 
-                  rotateX: -90,
-                  scale: 0.5
-                }}
-                animate={nameRevealed ? { 
-                  opacity: 1, 
-                  y: 0, 
-                  rotateX: 0,
-                  scale: 1
-                } : {}}
-                transition={{
-                  duration: 0.8,
-                  delay: index * 0.1,
-                  ease: [0.25, 0.46, 0.45, 0.94],
-                  type: "spring",
-                  stiffness: 100
-                }}
-                whileHover={{
-                  scale: 1.1,
-                  rotateY: 15,
-                  color: "#60a5fa",
-                  transition: { duration: 0.2 }
-                }}
-                style={{ 
-                  transformStyle: 'preserve-3d',
-                  transformOrigin: 'center bottom'
-                }}
-              >
-                {letter === ' ' ? '\u00A0' : letter}
-              </motion.span>
-            ))}
-          </h1>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={nameRevealed ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="text-6xl md:text-8xl font-bold text-white mb-2"
+          >
+            <InteractiveTitle 
+              variant="hero"
+              className="perspective-1000"
+            >
+              Sang Park
+            </InteractiveTitle>
+          </motion.div>
           
-          {/* Subtitle with ambient floating */}
+          {/* Subtitle with dynamic font weight and cursor following */}
           <AmbientAnimations type="floating" intensity={0.3} duration={5}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -114,37 +88,45 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 1.5 }}
               className="text-xl md:text-2xl text-gray-300 mb-8"
             >
-              I&apos;m a{' '}
-              <span className="text-blue-400 font-semibold min-w-[200px] inline-block text-left">
-                {displayText}
-                <motion.span
-                  animate={{ opacity: [1, 0] }}
-                  transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
-                  className="text-blue-400"
-                >
-                  |
-                </motion.span>
-              </span>
+              <HoverResponsiveText hoverWeight={500}>
+                <FollowingText strength={0.05}>
+                  I&apos;m a{' '}
+                  <span className="text-blue-400 font-semibold min-w-[200px] inline-block text-left">
+                    {displayText}
+                    <motion.span
+                      animate={{ opacity: [1, 0] }}
+                      transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
+                      className="text-blue-400"
+                    >
+                      |
+                    </motion.span>
+                  </span>
+                </FollowingText>
+              </HoverResponsiveText>
             </motion.div>
           </AmbientAnimations>
         </div>
 
-        {/* Description - Phase 2 */}
+        {/* Description with proximity-responsive font weight - Phase 2 */}
         <AmbientAnimations type="breathing" intensity={0.2} duration={7}>
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 2 }}
             className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed"
           >
-            I build products that solve real problems. From concept to launch, 
-            I focus on execution speed and user impact.
-          </motion.p>
+            <ProximityResponsiveText>
+              <FollowingText strength={0.03}>
+                I build products that solve real problems. From concept to launch, 
+                I focus on execution speed and user impact.
+              </FollowingText>
+            </ProximityResponsiveText>
+          </motion.div>
         </AmbientAnimations>
 
-        {/* CTA Buttons - Phase 3 */}
+        {/* CTA Buttons with enhanced hover effects - Phase 3 */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <AmbientAnimations type="pulse" intensity={0.5} duration={3}>
+          <AmbientAnimations type="breathing" intensity={0.1} duration={8}>
             <motion.a
               href="#projects"
               initial={{ opacity: 0, scale: 0, rotate: 180 }}
