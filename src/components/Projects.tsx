@@ -9,6 +9,7 @@ import AmbientAnimations from './AmbientAnimations';
 import { InteractiveTitle } from './InteractiveText';
 import { SectionResponsiveText, HoverResponsiveText } from './DynamicFontWeight';
 import { MagneticText, HighlightText } from './CursorFollowText';
+import { InViewMorpher, HoverMorpher } from './TypographyMorpher';
 
 interface Project {
   title: string;
@@ -99,14 +100,16 @@ export default function Projects() {
         {/* Section Header with Orchestrated Animation */}
         <AnimationOrchestrator sequence="text" className="text-center mb-16">
           <AmbientAnimations type="breathing" intensity={0.3} duration={6}>
-            <SectionResponsiveText>
-              <InteractiveTitle 
-                variant="section"
-                className="text-4xl md:text-5xl font-bold text-white mb-4"
-              >
-                Featured Projects
-              </InteractiveTitle>
-            </SectionResponsiveText>
+            <InViewMorpher>
+              <SectionResponsiveText>
+                <InteractiveTitle 
+                  variant="section"
+                  className="text-4xl md:text-5xl font-bold text-white mb-4"
+                >
+                  Featured Projects
+                </InteractiveTitle>
+              </SectionResponsiveText>
+            </InViewMorpher>
           </AmbientAnimations>
           <HighlightText radius={200}>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
@@ -181,9 +184,11 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             <AmbientAnimations type="floating" intensity={0.2} duration={4 + index * 0.3}>
               <HoverResponsiveText hoverWeight={600}>
                 <MagneticText radius={50}>
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors duration-300">
-                    {project.title}
-                  </h3>
+                  <HoverMorpher intensity={0.5}>
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors duration-300">
+                      {project.title}
+                    </h3>
+                  </HoverMorpher>
                 </MagneticText>
               </HoverResponsiveText>
             </AmbientAnimations>

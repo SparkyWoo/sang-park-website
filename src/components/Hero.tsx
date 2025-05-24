@@ -8,11 +8,9 @@ import AmbientAnimations from './AmbientAnimations';
 import { InteractiveTitle } from './InteractiveText';
 import { HoverResponsiveText, ProximityResponsiveText } from './DynamicFontWeight';
 import { FollowingText } from './CursorFollowText';
+import { WaveTypewriter } from './AdvancedTypewriter';
 
 export default function Hero() {
-  const [displayText, setDisplayText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
   const [nameRevealed, setNameRevealed] = useState(false);
 
   useEffect(() => {
@@ -21,28 +19,7 @@ export default function Hero() {
     return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    const roles = ['Product Engineer', 'Builder', 'Creator', 'Problem Solver'];
-    const currentRole = roles[currentIndex];
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        if (displayText.length < currentRole.length) {
-          setDisplayText(currentRole.slice(0, displayText.length + 1));
-        } else {
-          setTimeout(() => setIsDeleting(true), 2000);
-        }
-      } else {
-        if (displayText.length > 0) {
-          setDisplayText(displayText.slice(0, -1));
-        } else {
-          setIsDeleting(false);
-          setCurrentIndex((prev) => (prev + 1) % roles.length);
-        }
-      }
-    }, isDeleting ? 50 : 100);
-
-    return () => clearTimeout(timeout);
-  }, [displayText, currentIndex, isDeleting]);
+  const roles = ['Product Engineer', 'Builder', 'Creator', 'Problem Solver'];
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -92,14 +69,11 @@ export default function Hero() {
                 <FollowingText strength={0.05}>
                   I&apos;m a{' '}
                   <span className="text-blue-400 font-semibold min-w-[200px] inline-block text-left">
-                    {displayText}
-                    <motion.span
-                      animate={{ opacity: [1, 0] }}
-                      transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
+                    <WaveTypewriter 
+                      texts={roles}
+                      speed={120}
                       className="text-blue-400"
-                    >
-                      |
-                    </motion.span>
+                    />
                   </span>
                 </FollowingText>
               </HoverResponsiveText>

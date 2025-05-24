@@ -7,6 +7,7 @@ import AmbientAnimations from './AmbientAnimations';
 import { InteractiveTitle } from './InteractiveText';
 import { SectionResponsiveText, HoverResponsiveText } from './DynamicFontWeight';
 import { HighlightText, MagneticText } from './CursorFollowText';
+import { InViewMorpher, HoverMorpher } from './TypographyMorpher';
 
 const skills = [
   'Product Strategy',
@@ -29,14 +30,16 @@ export default function About() {
           {/* Section Header with Interactive Typography */}
           <AmbientAnimations type="breathing" intensity={0.3} duration={6}>
             <div className="text-center mb-16">
-              <SectionResponsiveText>
-                <InteractiveTitle 
-                  variant="section"
-                  className="text-4xl md:text-5xl font-bold text-white mb-4"
-                >
-                  About Me
-                </InteractiveTitle>
-              </SectionResponsiveText>
+              <InViewMorpher>
+                <SectionResponsiveText>
+                  <InteractiveTitle 
+                    variant="section"
+                    className="text-4xl md:text-5xl font-bold text-white mb-4"
+                  >
+                    About Me
+                  </InteractiveTitle>
+                </SectionResponsiveText>
+              </InViewMorpher>
               <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full" />
             </div>
           </AmbientAnimations>
@@ -54,9 +57,11 @@ export default function About() {
                 >
                   <HoverResponsiveText hoverWeight={600}>
                     <MagneticText radius={80}>
-                      <h3 className="text-2xl font-bold text-white mb-4">
-                        Building Products That Matter
-                      </h3>
+                      <HoverMorpher intensity={0.8}>
+                        <h3 className="text-2xl font-bold text-white mb-4">
+                          Building Products That Matter
+                        </h3>
+                      </HoverMorpher>
                     </MagneticText>
                   </HoverResponsiveText>
                   <HighlightText radius={120}>
@@ -111,9 +116,11 @@ export default function About() {
                 >
                   <HoverResponsiveText hoverWeight={600}>
                     <MagneticText radius={60}>
-                      <h3 className="text-2xl font-bold text-white mb-8">
-                        Skills & Expertise
-                      </h3>
+                      <HoverMorpher intensity={0.6}>
+                        <h3 className="text-2xl font-bold text-white mb-8">
+                          Skills & Expertise
+                        </h3>
+                      </HoverMorpher>
                     </MagneticText>
                   </HoverResponsiveText>
                 </motion.div>
