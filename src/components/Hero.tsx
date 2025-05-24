@@ -1,12 +1,20 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import ParticleBackground from './ParticleBackground';
 
 const Hero = () => {
   const [currentText, setCurrentText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  
+  const heroRef = useRef<HTMLElement>(null);
+  const nameRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLDivElement>(null);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
 
   const texts = useMemo(() => [
     'Product Engineer',
@@ -35,6 +43,55 @@ const Hero = () => {
 
     return () => clearTimeout(timeout);
   }, [currentText, currentIndex, isDeleting, texts]);
+
+  // GSAP scroll animations
+  useEffect(() => {
+    if (!heroRef.current || !nameRef.current || !subtitleRef.current || !descriptionRef.current) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Parallax effect for the entire hero section
+    gsap.to(heroRef.current, {
+      yPercent: -50,
+      ease: "none",
+      scrollTrigger: {
+        trigger: heroRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+
+    // Name scaling and fade effect
+    gsap.to(nameRef.current, {
+      scale: 0.8,
+      opacity: 0.3,
+      ease: "none",
+      scrollTrigger: {
+        trigger: heroRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+
+    // Subtitle and description fade
+    gsap.to([subtitleRef.current, descriptionRef.current], {
+      y: -100,
+      opacity: 0,
+      ease: "none",
+      scrollTrigger: {
+        trigger: heroRef.current,
+        start: "top top",
+        end: "center top",
+        scrub: true
+      }
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, []);
 
   // Split name into letters for staggered animation
   const nameLetters = "Sang Park".split("");
@@ -95,9 +152,17 @@ const Hero = () => {
   };
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center section-padding relative overflow-hidden">
-      {/* Subtle background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/5 via-transparent to-purple-900/5" />
+    <section 
+      ref={heroRef}
+      id="hero" 
+      className="min-h-screen flex items-center justify-center section-padding relative overflow-hidden"
+    >
+      {/* Particle Background */}
+      <ParticleBackground />
+      
+      {/* Enhanced background gradients */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 via-transparent to-purple-900/10" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
       
       <div className="container-max text-center relative z-10">
         <motion.div
@@ -105,16 +170,24 @@ const Hero = () => {
           initial="hidden"
           animate="visible"
         >
-          {/* Animated name */}
-          <motion.h1 className="text-6xl md:text-8xl lg:text-9xl font-light mb-6 perspective-1000">
+          {/* Animated name with enhanced effects */}
+          <motion.h1 
+            ref={nameRef}
+            className="text-6xl md:text-8xl lg:text-9xl font-light mb-6 perspective-1000"
+          >
             <span className="inline-block">
               {nameLetters.map((letter, index) => (
                 <motion.span
                   key={index}
                   variants={letterVariants}
-                  className="inline-block text-gradient"
+                  className="inline-block text-gradient hover:text-blue-400 transition-colors duration-300"
                   style={{ 
                     transformOrigin: "50% 50% -50px",
+                  }}
+                  whileHover={{ 
+                    scale: 1.1,
+                    rotateY: 15,
+                    transition: { duration: 0.2 }
                   }}
                 >
                   {letter === " " ? "\u00A0" : letter}
@@ -125,6 +198,7 @@ const Hero = () => {
           
           {/* Enhanced typewriter effect */}
           <motion.div 
+            ref={subtitleRef}
             variants={subtitleVariants}
             className="text-2xl md:text-3xl lg:text-4xl font-light mb-8 h-12 flex items-center justify-center"
           >
@@ -140,6 +214,7 @@ const Hero = () => {
 
           {/* Description with enhanced animation */}
           <motion.p
+            ref={descriptionRef}
             variants={descriptionVariants}
             className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed mb-12"
           >
@@ -160,8 +235,7 @@ const Hero = () => {
                   element.scrollIntoView({ behavior: 'smooth' });
                 }
               }}
-              className="group inline-flex items-center space-x-2 text-white hover:text-blue-400 transition-colors magnetic"
-              data-cursor-text="Explore"
+              className="group inline-flex items-center space-x-2 text-white hover:text-blue-400 transition-colors"
               whileHover={{ y: -2 }}
               whileTap={{ y: 0 }}
             >

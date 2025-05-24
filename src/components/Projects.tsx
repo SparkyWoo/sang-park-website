@@ -1,10 +1,16 @@
 'use client';
 
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
-import { useRef } from 'react';
 
 const Projects = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
   const projects = [
     {
       title: 'LeetProduct',
@@ -72,8 +78,73 @@ const Projects = () => {
     }
   ];
 
+  // GSAP scroll animations
+  useEffect(() => {
+    if (!sectionRef.current || !titleRef.current || !gridRef.current) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Title reveal animation
+    gsap.fromTo(titleRef.current,
+      {
+        y: 100,
+        opacity: 0
+      },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: titleRef.current,
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+
+    // Staggered project cards animation
+    const cards = gridRef.current.querySelectorAll('.project-card');
+    gsap.fromTo(cards,
+      {
+        y: 80,
+        opacity: 0,
+        scale: 0.8
+      },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: gridRef.current,
+          start: "top 70%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+
+    // Parallax effect for the section background
+    gsap.to(sectionRef.current, {
+      yPercent: -10,
+      ease: "none",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, []);
+
   // Enhanced Project Card Component
-  const ProjectCard = ({ project, index }: { project: typeof projects[0], index: number }) => {
+  const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
     const ref = useRef<HTMLDivElement>(null);
     
     const x = useMotionValue(0);
@@ -110,11 +181,7 @@ const Projects = () => {
     return (
       <motion.div
         ref={ref}
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: index * 0.1 }}
-        viewport={{ once: true }}
-        className="group perspective-1000"
+        className="group perspective-1000 project-card"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{
@@ -131,7 +198,7 @@ const Projects = () => {
           whileHover={{
             scale: 1.02,
             borderColor: "rgb(59 130 246 / 0.3)",
-            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.1)",
+            boxShadow: "0 25px 50px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.1)",
           }}
           transition={{ duration: 0.3 }}
         >
@@ -165,7 +232,7 @@ const Projects = () => {
               </span>
             </motion.div>
 
-            {/* Hover overlay */}
+            {/* Enhanced hover overlay */}
             <motion.div
               className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               style={{ transform: "translateZ(10px)" }}
@@ -221,8 +288,7 @@ const Projects = () => {
               href={project.link}
               target={project.link.startsWith('http') ? '_blank' : undefined}
               rel={project.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-              className="inline-flex items-center space-x-2 text-white hover:text-blue-400 transition-colors magnetic"
-              data-cursor-text="Visit"
+              className="inline-flex items-center space-x-2 text-white hover:text-blue-400 transition-colors"
               whileHover={{ x: 5 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -247,18 +313,19 @@ const Projects = () => {
   };
 
   return (
-    <section id="projects" className="py-24 section-padding bg-gray-900/20 relative">
-      {/* Subtle background pattern */}
+    <section 
+      ref={sectionRef}
+      id="projects" 
+      className="py-24 section-padding bg-gray-900/20 relative overflow-hidden"
+    >
+      {/* Enhanced background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-transparent to-purple-500/10" />
       </div>
       
       <div className="container-max relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          ref={titleRef}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-light mb-6">
@@ -269,9 +336,9 @@ const Projects = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <ProjectCard key={project.title} project={project} index={index} />
+        <div ref={gridRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {projects.map((project) => (
+            <ProjectCard key={project.title} project={project} />
           ))}
         </div>
 
@@ -287,8 +354,7 @@ const Projects = () => {
           </p>
           <motion.a
             href="#contact"
-            className="inline-flex items-center space-x-2 text-white hover:text-blue-400 transition-colors magnetic"
-            data-cursor-text="Let's talk"
+            className="inline-flex items-center space-x-2 text-white hover:text-blue-400 transition-colors"
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.95 }}
           >

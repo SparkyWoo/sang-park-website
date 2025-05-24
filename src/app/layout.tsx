@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import SmoothScrollProvider from "@/components/SmoothScrollProvider";
-import MagneticCursor from "@/components/MagneticCursor";
+import ScrollTriggerProvider from "@/components/ScrollTriggerProvider";
 
 export const metadata: Metadata = {
   title: "Sang Park - Product Engineer & Builder",
@@ -31,10 +30,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className="antialiased">
-        <SmoothScrollProvider>
-          <MagneticCursor />
+        <ScrollTriggerProvider>
           {children}
-        </SmoothScrollProvider>
+        </ScrollTriggerProvider>
       </body>
     </html>
   );

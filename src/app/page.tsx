@@ -9,7 +9,7 @@ import Footer from '@/components/Footer';
 import { getRecentPosts } from '@/lib/blog';
 
 export default function Home() {
-  const recentPosts = getRecentPosts(3);
+  const recentPosts = getRecentPosts(6);
 
   return (
     <main className="min-h-screen">
