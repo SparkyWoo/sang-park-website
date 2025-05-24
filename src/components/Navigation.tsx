@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useSmoothScroll } from '@/components/SmoothScrollEngine';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
+  const { smoothScrollTo } = useSmoothScroll();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,10 +52,7 @@ const Navigation = () => {
   ];
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    smoothScrollTo(href, 80);
   };
 
   return (

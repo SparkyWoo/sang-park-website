@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ScrollTriggerProvider from "@/components/ScrollTriggerProvider";
+import SmoothScrollEngine from "@/components/SmoothScrollEngine";
+import ScrollOptimizer from "@/components/ScrollOptimizer";
 
 export const metadata: Metadata = {
   title: "Sang Park - Product Engineer & Builder",
@@ -30,9 +32,17 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className="antialiased">
-        <ScrollTriggerProvider>
-          {children}
-        </ScrollTriggerProvider>
+        <SmoothScrollEngine enabled={true} intensity={0.8} duration={400}>
+          <ScrollOptimizer 
+            enabled={true}
+            enableGPUAcceleration={true}
+            enableLayoutContainment={true}
+          >
+            <ScrollTriggerProvider>
+              {children}
+            </ScrollTriggerProvider>
+          </ScrollOptimizer>
+        </SmoothScrollEngine>
       </body>
     </html>
   );
