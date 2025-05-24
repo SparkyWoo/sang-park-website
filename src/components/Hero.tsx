@@ -161,8 +161,8 @@ const Hero = () => {
       <ParticleBackground />
       
       {/* Enhanced background gradients */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 via-transparent to-purple-900/10" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 via-transparent to-purple-900/10 z-0" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent z-0" />
       
       <div className="container-max text-center relative z-10">
         <motion.div
