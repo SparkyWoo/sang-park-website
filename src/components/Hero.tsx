@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import ParticleBackground from './ParticleBackground';
+import WebGLParticleBackground from './WebGLParticleBackground';
 
 const Hero = () => {
   const [currentText, setCurrentText] = useState('');
@@ -158,7 +158,7 @@ const Hero = () => {
       className="min-h-screen flex items-center justify-center section-padding relative overflow-hidden"
     >
       {/* Particle Background */}
-      <ParticleBackground />
+      <WebGLParticleBackground />
       
       {/* Enhanced background gradients */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 via-transparent to-purple-900/10 z-0" />
