@@ -1,219 +1,243 @@
 'use client';
 
+import React from 'react';
 import { motion } from 'framer-motion';
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import ProjectCard3D from './ProjectCard3D';
+import Image from 'next/image';
+import AnimationOrchestrator from './AnimationOrchestrator';
+import PhysicsAnimations from './PhysicsAnimations';
+import AmbientAnimations from './AmbientAnimations';
 
-const Projects = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
+interface Project {
+  title: string;
+  description: string;
+  image: string;
+  technologies: string[];
+  link: string;
+  status: 'Live' | 'In Development' | 'Completed';
+}
 
-  const projects = [
-    {
-      id: 1,
-      title: 'LeetProduct',
-      description: 'LeetCode for Product Managers - A platform designed to help PMs practice and improve their product thinking skills through structured challenges.',
-      tech: ['React', 'Node.js', 'PostgreSQL', 'TypeScript'],
-      status: 'Live' as const,
-      link: 'https://leetproduct.com',
-      image: '/images/projects/leetproduct.png'
-    },
-    {
-      id: 2,
-      title: 'VariantAB',
-      description: 'AI-powered LinkedIn post analysis tool that helps content creators optimize their posts for better engagement and reach.',
-      tech: ['Next.js', 'OpenAI API', 'Supabase', 'TypeScript'],
-      status: 'Live' as const,
-      link: 'https://www.variantab.com/',
-      image: '/images/projects/variantab.png'
-    },
-    {
-      id: 3,
-      title: 'Quizings',
-      description: 'Interactive personality tests and quizzes platform that helps users discover insights about themselves through engaging assessments.',
-      tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-      status: 'Live' as const,
-      link: 'https://www.quizings.com/',
-      image: '/images/projects/quizings.png'
-    },
-    {
-      id: 4,
-      title: 'BuyWhoa',
-      description: 'Product discovery platform that curates and showcases innovative products, helping users find unique items and brands.',
-      tech: ['Next.js', 'Prisma', 'PostgreSQL', 'Tailwind'],
-      status: 'Live' as const,
-      link: 'https://buywhoa.com/',
-      image: '/images/projects/buywhoa.png'
-    },
-    {
-      id: 5,
-      title: 'ResumeHey',
-      description: 'AI-powered resume optimization tool that helps job seekers improve their resumes with personalized feedback and suggestions.',
-      tech: ['React', 'Python', 'OpenAI API', 'FastAPI'],
-      status: 'Live' as const,
-      link: 'https://www.resumehey.com/',
-      image: '/images/projects/resumehey.png'
-    },
-    {
-      id: 6,
-      title: 'ReactionTimer',
-      description: 'Mobile game that tests and improves reaction time skills through various challenges and exercises. Built for iOS and Android.',
-      tech: ['React Native', 'Expo', 'TypeScript', 'AsyncStorage'],
-      status: 'Live' as const,
-      link: '#',
-      image: '/images/projects/reactiontimer.png'
-    },
-    {
-      id: 7,
-      title: 'WSIE',
-      description: 'Restaurant recommendation app that helps users discover great dining experiences based on their preferences and location.',
-      tech: ['React Native', 'Firebase', 'Google Maps API', 'Redux'],
-      status: 'Live' as const,
-      link: 'https://wsie.app/',
-      image: '/images/projects/wsie.png'
-    },
-    {
-      id: 8,
-      title: 'Add to Calendar',
-      description: 'Chrome extension that automatically detects event dates and countdown timers on Tock and other websites, adding an "Add to Calendar" button to never miss restaurant reservations.',
-      tech: ['JavaScript', 'Chrome Extension API', 'Google Calendar API', 'HTML/CSS'],
-      status: 'Live' as const,
-      link: 'https://chromewebstore.google.com/detail/add-to-calendar/nnnijhodgdeliklkedjkkllglkgmmagk',
-      image: '/images/projects/add-to-calendar.png'
-    }
-  ];
+const projects: Project[] = [
+  {
+    title: 'LeetProduct',
+    description: 'LeetCode for Product Managers - Practice product management skills with real-world scenarios and case studies.',
+    image: '/images/projects/leetproduct.png',
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Supabase'],
+    link: 'https://leetproduct.com',
+    status: 'Live'
+  },
+  {
+    title: 'VariantAB',
+    description: 'AI-powered LinkedIn post analysis tool that helps optimize content performance and engagement.',
+    image: '/images/projects/variantab.png',
+    technologies: ['React', 'Node.js', 'OpenAI API', 'PostgreSQL'],
+    link: 'https://www.variantab.com/',
+    status: 'Live'
+  },
+  {
+    title: 'Quizings',
+    description: 'Personality tests and quizzes platform with engaging interactive experiences.',
+    image: '/images/projects/quizings.png',
+    technologies: ['Next.js', 'React', 'MongoDB', 'Tailwind CSS'],
+    link: 'https://www.quizings.com/',
+    status: 'Live'
+  },
+  {
+    title: 'BuyWhoa',
+    description: 'Product discovery platform helping users find unique and interesting products.',
+    image: '/images/projects/buywhoa.png',
+    technologies: ['React', 'Express.js', 'MySQL', 'AWS'],
+    link: 'https://buywhoa.com/',
+    status: 'Live'
+  },
+  {
+    title: 'ResumeHey',
+    description: 'AI-powered resume optimization tool that helps job seekers improve their resumes.',
+    image: '/images/projects/resumehey.png',
+    technologies: ['Next.js', 'OpenAI API', 'Stripe', 'Vercel'],
+    link: 'https://www.resumehey.com/',
+    status: 'Live'
+  },
+  {
+    title: 'ReactionTimer',
+    description: 'Mobile game testing reaction time and reflexes with engaging gameplay mechanics.',
+    image: '/images/projects/reactiontimer.png',
+    technologies: ['React Native', 'Expo', 'TypeScript', 'AsyncStorage'],
+    link: '#',
+    status: 'Completed'
+  },
+  {
+    title: 'WSIE',
+    description: 'Restaurant recommendation app helping users discover great dining experiences.',
+    image: '/images/projects/wsie.png',
+    technologies: ['React Native', 'Firebase', 'Google Places API', 'Redux'],
+    link: 'https://wsie.app/',
+    status: 'Live'
+  },
+  {
+    title: 'Add to Calendar',
+    description: 'Chrome extension for Tock reservations that automatically adds restaurant bookings to your calendar.',
+    image: '/images/projects/addtocalendar.png',
+    technologies: ['JavaScript', 'Chrome Extension API', 'Calendar API'],
+    link: '#',
+    status: 'Completed'
+  }
+];
 
-  // GSAP scroll animations
-  useEffect(() => {
-    if (!sectionRef.current || !titleRef.current || !gridRef.current) return;
+const statusColors = {
+  'Live': 'bg-green-500',
+  'In Development': 'bg-yellow-500',
+  'Completed': 'bg-blue-500'
+};
 
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Title reveal animation
-    gsap.fromTo(titleRef.current,
-      {
-        y: 100,
-        opacity: 0
-      },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: titleRef.current,
-          start: "top 80%",
-          toggleActions: "play none none reverse"
-        }
-      }
-    );
-
-    // Staggered project cards animation
-    const cards = gridRef.current.querySelectorAll('.project-card-3d');
-    gsap.fromTo(cards,
-      {
-        y: 80,
-        opacity: 0,
-        scale: 0.8
-      },
-      {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: gridRef.current,
-          start: "top 70%",
-          toggleActions: "play none none reverse"
-        }
-      }
-    );
-
-    // Parallax effect for the section background
-    gsap.to(sectionRef.current, {
-      yPercent: -10,
-      ease: "none",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true
-      }
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, []);
-
+export default function Projects() {
   return (
-    <section 
-      ref={sectionRef}
-      id="projects" 
-      className="py-24 section-padding bg-gray-900/20 relative overflow-hidden"
-    >
-      {/* Enhanced background pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-transparent to-purple-500/10" />
-      </div>
-      
-      <div className="container-max relative z-10">
-        <motion.div
-          ref={titleRef}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-light mb-6">
-            <span className="text-gradient">Projects</span>
-          </h2>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            A collection of products and experiments I&apos;ve built to solve real problems and explore new ideas.
+    <section id="projects" className="py-20 bg-gray-900/50">
+      <div className="container mx-auto px-4">
+        {/* Section Header with Orchestrated Animation */}
+        <AnimationOrchestrator sequence="text" className="text-center mb-16">
+          <AmbientAnimations type="breathing" intensity={0.3} duration={6}>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Featured Projects
+            </h2>
+          </AmbientAnimations>
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            A collection of products I&apos;ve built, from concept to launch. 
+            Each project represents a unique challenge and learning experience.
           </p>
-        </motion.div>
+        </AnimationOrchestrator>
 
-        <div ref={gridRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project) => (
-            <div key={project.id} className="project-card-3d">
-              <ProjectCard3D project={project} />
-            </div>
+        {/* Projects Grid with Staggered Animation */}
+        <AnimationOrchestrator 
+          sequence="cards" 
+          stagger={0.15}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {projects.map((project, index) => (
+            <ProjectCard key={project.title} project={project} index={index} />
           ))}
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="text-center mt-12"
-        >
-          <p className="text-gray-400 mb-6">
-            More projects coming soon. Always building something new.
-          </p>
-          <motion.a
-            href="#contact"
-            className="inline-flex items-center space-x-2 text-white hover:text-blue-400 transition-colors"
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span>Let&apos;s build something together</span>
-            <motion.svg 
-              className="w-4 h-4" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-              whileHover={{ x: 3 }}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </motion.svg>
-          </motion.a>
-        </motion.div>
+        </AnimationOrchestrator>
       </div>
     </section>
   );
-};
+}
 
-export default Projects; 
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  return (
+    <PhysicsAnimations type="hover" intensity={0.8} className="h-full">
+      <AmbientAnimations type="breathing" intensity={0.1} duration={5 + index * 0.5}>
+        <motion.div
+          className="bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300 h-full flex flex-col group"
+          whileHover={{
+            boxShadow: "0 20px 40px rgba(59, 130, 246, 0.1)",
+            transition: { duration: 0.3 }
+          }}
+        >
+          {/* Project Image with Enhanced Hover Effect */}
+          <div className="relative overflow-hidden">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="relative"
+            >
+              <Image
+                src={project.image}
+                alt={project.title}
+                width={400}
+                height={250}
+                className="w-full h-48 object-cover"
+              />
+              
+              {/* Overlay with enhanced effects */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+                className="absolute inset-0 bg-gradient-to-t from-blue-600/20 via-transparent to-transparent"
+              />
+              
+              {/* Status Badge with Physics */}
+              <PhysicsAnimations type="elastic" intensity={0.5}>
+                <div className="absolute top-4 right-4">
+                  <span className={`px-3 py-1 rounded-full text-xs font-semibold text-white ${statusColors[project.status]}`}>
+                    {project.status}
+                  </span>
+                </div>
+              </PhysicsAnimations>
+            </motion.div>
+          </div>
+
+          {/* Content with Ambient Effects */}
+          <div className="p-6 flex-1 flex flex-col">
+            <AmbientAnimations type="floating" intensity={0.2} duration={4 + index * 0.3}>
+              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors duration-300">
+                {project.title}
+              </h3>
+            </AmbientAnimations>
+            
+            <p className="text-gray-400 mb-4 flex-1 leading-relaxed">
+              {project.description}
+            </p>
+
+            {/* Tech Stack with Staggered Physics */}
+            <div className="flex flex-wrap gap-2 mb-4">
+              {project.technologies.map((tech, techIndex) => (
+                <PhysicsAnimations 
+                  key={tech} 
+                  type="elastic" 
+                  intensity={0.3}
+                >
+                  <motion.span
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ 
+                      delay: techIndex * 0.1,
+                      type: "spring",
+                      stiffness: 200
+                    }}
+                    whileHover={{ 
+                      scale: 1.1,
+                      backgroundColor: "rgba(59, 130, 246, 0.2)",
+                      transition: { duration: 0.2 }
+                    }}
+                    className="px-3 py-1 bg-gray-700/50 text-gray-300 rounded-full text-sm hover:text-blue-400 transition-colors duration-200 cursor-default"
+                  >
+                    {tech}
+                  </motion.span>
+                </PhysicsAnimations>
+              ))}
+            </div>
+
+            {/* CTA Button with Enhanced Physics */}
+            {project.link !== '#' && (
+              <PhysicsAnimations type="elastic" intensity={1}>
+                <motion.a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ 
+                    scale: 1.02,
+                    boxShadow: "0 5px 15px rgba(59, 130, 246, 0.3)",
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  className="inline-flex items-center justify-center w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-all duration-300 group"
+                >
+                  <span>View Project</span>
+                  <motion.svg
+                    className="w-4 h-4 ml-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    whileHover={{ x: 2 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </motion.svg>
+                </motion.a>
+              </PhysicsAnimations>
+            )}
+          </div>
+        </motion.div>
+      </AmbientAnimations>
+    </PhysicsAnimations>
+  );
+} 
