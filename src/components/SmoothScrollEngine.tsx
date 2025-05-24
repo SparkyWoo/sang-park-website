@@ -5,7 +5,6 @@ import React, { useEffect, useCallback, useRef } from 'react';
 interface SmoothScrollEngineProps {
   children: React.ReactNode;
   enabled?: boolean;
-  intensity?: number;
   duration?: number;
 }
 
@@ -21,14 +20,13 @@ interface ScrollTarget {
 // Extend Window interface for our custom properties
 declare global {
   interface Window {
-    smoothScrollTo?: (target: string | HTMLElement, offset?: number) => void;
+    smoothScrollTo?: (target: string | HTMLElement, offset?: number, instant?: boolean) => void;
   }
 }
 
 const SmoothScrollEngine: React.FC<SmoothScrollEngineProps> = ({
   children,
   enabled = true,
-  intensity = 1,
   duration = 800
 }) => {
   const scrollTargetRef = useRef<ScrollTarget | null>(null);
@@ -40,21 +38,17 @@ const SmoothScrollEngine: React.FC<SmoothScrollEngineProps> = ({
     return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
   }, []);
 
-  // Enhanced easing with customizable intensity
-  const customEasing = useCallback((t: number): number => {
-    const baseEasing = easeOutExpo(t);
-    // Apply intensity curve for more/less aggressive easing
-    return Math.pow(baseEasing, 1 / intensity);
-  }, [easeOutExpo, intensity]);
-
   // Calculate optimal duration based on distance
   const calculateDuration = useCallback((distance: number): number => {
     const baseDuration = duration;
-    const minDuration = 150;
-    const maxDuration = 600;
+    const minDuration = 0;
+    const maxDuration = 300;
+    
+    // For very short distances, make it instant
+    if (distance < 50) return 0;
     
     // Logarithmic scaling for distance-based duration
-    const scaledDuration = baseDuration * Math.log(distance / 100 + 1);
+    const scaledDuration = baseDuration * Math.log(distance / 100 + 1) * 0.5;
     return Math.max(minDuration, Math.min(maxDuration, scaledDuration));
   }, [duration]);
 
@@ -86,49 +80,58 @@ const SmoothScrollEngine: React.FC<SmoothScrollEngineProps> = ({
     }
   }, []);
 
-  // Main scroll function
-  const smoothScrollTo = useCallback((targetElement: HTMLElement | string, offset: number = 0) => {
-    if (!enabled) return;
-
-    let element: HTMLElement | null = null;
-    
-    if (typeof targetElement === 'string') {
-      element = document.querySelector(targetElement) as HTMLElement;
-    } else {
-      element = targetElement;
+  // Smooth scroll to target with optional instant mode
+  const smoothScrollTo = useCallback((target: string | HTMLElement, offset: number = 0, instant: boolean = false) => {
+    if (!enabled) {
+      // Fallback to native scroll
+      const element = typeof target === 'string' ? document.querySelector(target) as HTMLElement : target;
+      if (element) {
+        const elementTop = element.offsetTop - offset;
+        window.scrollTo({ top: elementTop, behavior: instant ? 'auto' : 'smooth' });
+      }
+      return;
     }
 
+    const element = typeof target === 'string' ? document.querySelector(target) as HTMLElement : target;
     if (!element) return;
 
-    // Cancel any existing scroll animation
-    if (rafIdRef.current) {
-      cancelAnimationFrame(rafIdRef.current);
-    }
-
-    const currentY = window.scrollY;
     const targetY = element.offsetTop - offset;
-    const distance = Math.abs(targetY - currentY);
-    
-    // Skip animation for very small distances
-    if (distance < 10) {
+    const startY = window.scrollY;
+    const distance = Math.abs(targetY - startY);
+
+    // If instant mode or very small distance, scroll immediately
+    if (instant || distance < 10) {
       window.scrollTo({ top: targetY, behavior: 'auto' });
       return;
     }
 
+    // Cancel any existing scroll
+    if (scrollTargetRef.current) {
+      scrollTargetRef.current = null;
+    }
+
     const scrollDuration = calculateDuration(distance);
     
+    // If calculated duration is 0, scroll instantly
+    if (scrollDuration === 0) {
+      window.scrollTo({ top: targetY, behavior: 'auto' });
+      return;
+    }
+
     scrollTargetRef.current = {
-      element,
+      element: element as HTMLElement,
       targetY,
-      startY: currentY,
+      startY,
       startTime: performance.now(),
       duration: scrollDuration,
-      easing: customEasing
+      easing: easeOutExpo
     };
 
-    isScrollingRef.current = true;
-    rafIdRef.current = requestAnimationFrame(animateScroll);
-  }, [enabled, calculateDuration, customEasing, animateScroll]);
+    if (!isScrollingRef.current) {
+      isScrollingRef.current = true;
+      animateScroll(performance.now());
+    }
+  }, [enabled, calculateDuration, easeOutExpo, animateScroll]);
 
   // Handle navigation clicks
   useEffect(() => {
@@ -175,16 +178,11 @@ const SmoothScrollEngine: React.FC<SmoothScrollEngineProps> = ({
 
   // Expose scroll function to window for external use
   useEffect(() => {
-    if (enabled) {
-      window.smoothScrollTo = smoothScrollTo;
-    }
-    
+    window.smoothScrollTo = smoothScrollTo;
     return () => {
-      if (window.smoothScrollTo === smoothScrollTo) {
-        delete window.smoothScrollTo;
-      }
+      delete window.smoothScrollTo;
     };
-  }, [enabled, smoothScrollTo]);
+  }, [smoothScrollTo]);
 
   // Handle browser back/forward navigation
   useEffect(() => {
@@ -234,20 +232,17 @@ const SmoothScrollEngine: React.FC<SmoothScrollEngineProps> = ({
 
 export default SmoothScrollEngine;
 
-// Hook for using smooth scroll in components
+// Hook to use smooth scroll functionality
 export const useSmoothScroll = () => {
-  const smoothScrollTo = useCallback((target: string | HTMLElement, offset: number = 80) => {
+  const smoothScrollTo = useCallback((target: string | HTMLElement, offset: number = 0, instant: boolean = false) => {
     if (window.smoothScrollTo) {
-      window.smoothScrollTo(target, offset);
+      window.smoothScrollTo(target, offset, instant);
     } else {
-      // Fallback to browser smooth scroll
-      if (typeof target === 'string') {
-        const element = document.querySelector(target) as HTMLElement;
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      } else {
-        target.scrollIntoView({ behavior: 'smooth' });
+      // Fallback to native scroll
+      const element = typeof target === 'string' ? document.querySelector(target) as HTMLElement : target;
+      if (element) {
+        const elementTop = element.offsetTop - offset;
+        window.scrollTo({ top: elementTop, behavior: instant ? 'auto' : 'smooth' });
       }
     }
   }, []);

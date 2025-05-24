@@ -52,7 +52,7 @@ const Navigation = () => {
   ];
 
   const scrollToSection = (href: string) => {
-    smoothScrollTo(href, 80);
+    smoothScrollTo(href, 80, true);
   };
 
   return (
