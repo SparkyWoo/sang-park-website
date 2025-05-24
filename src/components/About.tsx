@@ -20,7 +20,7 @@ const skills = [
   'Python',
   'UI/UX Design',
   'Data Analysis',
-  'Growth Marketing',
+  'SQL',
   'Angel Investing'
 ];
 
@@ -91,8 +91,8 @@ export default function About() {
                     >
                       <HighlightText radius={120}>
                         <p className="text-gray-300 leading-relaxed mb-6">
-                          From LeetProduct (helping PMs practice) to VariantAB (AI-powered LinkedIn optimization), 
-                          I focus on tools that solve immediate pain points. Speed is my competitive advantage—I can 
+                          From LeetProduct (Leetcode for PMs) to VariantAB (AI-powered LinkedIn optimization), 
+                          I focus on products that solve immediate pain points. Speed is my competitive advantage—I can 
                           go from idea to launched product faster than most teams can write a spec.
                         </p>
                       </HighlightText>
@@ -186,8 +186,8 @@ export default function About() {
                   className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8"
                 >
                   {[
-                    { number: '8+', label: 'Products Launched' },
-                    { number: '5+', label: 'Years Building' },
+                    { number: '10+', label: 'Products Launched' },
+                    { number: '10+', label: 'Years Building' },
                     { number: '∞', label: 'Problems to Solve' }
                   ].map((stat, index) => (
                     <HoverTilt key={stat.label} intensity={0.5}>
