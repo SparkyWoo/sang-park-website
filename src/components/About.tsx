@@ -166,7 +166,7 @@ export default function About() {
                 { number: '5+', label: 'Years Building' },
                 { number: '∞', label: 'Problems to Solve' }
               ].map((stat, index) => (
-                <AmbientAnimations key={stat.label} type="pulse" intensity={0.3} duration={3 + index}>
+                <AmbientAnimations key={stat.label} type="breathing" intensity={0.05} duration={6 + index * 2}>
                   <motion.div
                     whileHover={{ 
                       scale: 1.05,

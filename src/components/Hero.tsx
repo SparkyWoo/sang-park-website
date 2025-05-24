@@ -125,7 +125,7 @@ export default function Hero() {
         </AmbientAnimations>
 
         {/* CTA Buttons with enhanced hover effects - Phase 3 */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div className="flex flex-col sm:flex-row gap-6 sm:gap-4 justify-center items-center w-full max-w-md sm:max-w-none mx-auto">
           <AmbientAnimations type="breathing" intensity={0.1} duration={8}>
             <motion.a
               href="#projects"
@@ -144,7 +144,7 @@ export default function Hero() {
                 transition: { duration: 0.2 }
               }}
               whileTap={{ scale: 0.95 }}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-blue-500/25"
+              className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-blue-500/25 text-center"
             >
               View My Work
             </motion.a>
@@ -169,7 +169,7 @@ export default function Hero() {
                 transition: { duration: 0.2 }
               }}
               whileTap={{ scale: 0.95 }}
-              className="border-2 border-gray-600 hover:border-blue-400 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300"
+              className="w-full sm:w-auto border-2 border-gray-600 hover:border-blue-400 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 text-center"
             >
               Get In Touch
             </motion.a>
