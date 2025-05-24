@@ -5,6 +5,7 @@ import SmoothScrollEngine from "@/components/SmoothScrollEngine";
 import ScrollOptimizer from "@/components/ScrollOptimizer";
 import SmartBreadcrumbs from "@/components/SmartBreadcrumbs";
 import PageMiniMap from "@/components/PageMiniMap";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "Sang Park - Product Engineer & Builder",
@@ -75,6 +76,9 @@ export default function RootLayout({
             </ScrollTriggerProvider>
           </ScrollOptimizer>
         </SmoothScrollEngine>
+        
+        {/* Vercel Analytics */}
+        <Analytics />
       </body>
     </html>
   );
