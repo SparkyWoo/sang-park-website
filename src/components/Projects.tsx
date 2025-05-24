@@ -1,7 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import Image from 'next/image';
+import { useRef } from 'react';
 
 const Projects = () => {
   const projects = [
@@ -71,9 +72,188 @@ const Projects = () => {
     }
   ];
 
+  // Enhanced Project Card Component
+  const ProjectCard = ({ project, index }: { project: typeof projects[0], index: number }) => {
+    const ref = useRef<HTMLDivElement>(null);
+    
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+    
+    const mouseXSpring = useSpring(x);
+    const mouseYSpring = useSpring(y);
+    
+    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7.5deg", "-7.5deg"]);
+    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7.5deg", "7.5deg"]);
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+      if (!ref.current) return;
+      
+      const rect = ref.current.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
+      
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+      
+      const xPct = mouseX / width - 0.5;
+      const yPct = mouseY / height - 0.5;
+      
+      x.set(xPct);
+      y.set(yPct);
+    };
+
+    const handleMouseLeave = () => {
+      x.set(0);
+      y.set(0);
+    };
+
+    return (
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: index * 0.1 }}
+        viewport={{ once: true }}
+        className="group perspective-1000"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          transformStyle: "preserve-3d",
+        }}
+      >
+        <motion.div
+          className="bg-gray-900/40 border border-gray-800 rounded-lg overflow-hidden transition-all duration-300 relative"
+          style={{
+            rotateX,
+            rotateY,
+            transformStyle: "preserve-3d",
+          }}
+          whileHover={{
+            scale: 1.02,
+            borderColor: "rgb(59 130 246 / 0.3)",
+            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.1)",
+          }}
+          transition={{ duration: 0.3 }}
+        >
+          {/* Enhanced image container */}
+          <div className="relative h-48 bg-gray-800 overflow-hidden">
+            <motion.div
+              className="w-full h-full"
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.4 }}
+            >
+              <Image
+                src={project.image}
+                alt={`${project.title} screenshot`}
+                fill
+                className="object-cover"
+              />
+            </motion.div>
+            
+            {/* Animated status badge */}
+            <motion.div 
+              className="absolute top-4 right-4"
+              whileHover={{ scale: 1.1, y: -2 }}
+              transition={{ duration: 0.2 }}
+            >
+              <span className={`px-3 py-1 text-xs rounded-full backdrop-blur-sm ${
+                project.status === 'Live' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
+                project.status === 'In Development' ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' :
+                'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+              }`}>
+                {project.status}
+              </span>
+            </motion.div>
+
+            {/* Hover overlay */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{ transform: "translateZ(10px)" }}
+            />
+          </div>
+
+          <div className="p-6" style={{ transform: "translateZ(20px)" }}>
+            <motion.h3 
+              className="text-xl font-light mb-3 text-white group-hover:text-blue-400 transition-colors"
+              whileHover={{ x: 5 }}
+              transition={{ duration: 0.2 }}
+            >
+              {project.title}
+            </motion.h3>
+            
+            <p className="text-gray-400 mb-4 leading-relaxed">
+              {project.description}
+            </p>
+
+            {/* Enhanced tech stack */}
+            <motion.div 
+              className="flex flex-wrap gap-2 mb-4"
+              variants={{
+                hover: {
+                  transition: {
+                    staggerChildren: 0.05,
+                  },
+                },
+              }}
+              whileHover="hover"
+            >
+              {project.tech.map((tech) => (
+                <motion.span
+                  key={tech}
+                  className="px-2 py-1 text-xs bg-gray-800 text-gray-300 rounded border border-gray-700 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200"
+                  variants={{
+                    hover: {
+                      y: -2,
+                      scale: 1.05,
+                    },
+                  }}
+                  whileHover={{
+                    boxShadow: "0 4px 8px rgba(59, 130, 246, 0.2)",
+                  }}
+                >
+                  {tech}
+                </motion.span>
+              ))}
+            </motion.div>
+
+            {/* Enhanced link */}
+            <motion.a
+              href={project.link}
+              target={project.link.startsWith('http') ? '_blank' : undefined}
+              rel={project.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+              className="inline-flex items-center space-x-2 text-white hover:text-blue-400 transition-colors magnetic"
+              data-cursor-text="Visit"
+              whileHover={{ x: 5 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span className="text-sm">
+                {project.link.startsWith('http') ? 'Visit Site' : 'View Project'}
+              </span>
+              <motion.svg 
+                className="w-4 h-4" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+                whileHover={{ x: 3 }}
+                transition={{ duration: 0.2 }}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </motion.svg>
+            </motion.a>
+          </div>
+        </motion.div>
+      </motion.div>
+    );
+  };
+
   return (
-    <section id="projects" className="py-24 section-padding bg-gray-900/20">
-      <div className="container-max">
+    <section id="projects" className="py-24 section-padding bg-gray-900/20 relative">
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-transparent to-purple-500/10" />
+      </div>
+      
+      <div className="container-max relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -91,71 +271,7 @@ const Projects = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="group"
-            >
-              <div className="bg-gray-900/40 border border-gray-800 rounded-lg overflow-hidden hover:border-gray-700 transition-all duration-300">
-                <div className="relative h-48 bg-gray-800 overflow-hidden">
-                  <Image
-                    src={project.image}
-                    alt={`${project.title} screenshot`}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  
-                  <div className="absolute top-4 right-4">
-                    <span className={`px-2 py-1 text-xs rounded-full ${
-                      project.status === 'Live' ? 'bg-green-500/20 text-green-400' :
-                      project.status === 'In Development' ? 'bg-yellow-500/20 text-yellow-400' :
-                      'bg-blue-500/20 text-blue-400'
-                    }`}>
-                      {project.status}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <h3 className="text-xl font-light mb-3 text-white group-hover:text-gray-300 transition-colors">
-                    {project.title}
-                  </h3>
-                  
-                  <p className="text-gray-400 mb-4 leading-relaxed">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tech.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2 py-1 text-xs bg-gray-800 text-gray-300 rounded"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <motion.a
-                    href={project.link}
-                    target={project.link.startsWith('http') ? '_blank' : undefined}
-                    rel={project.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="inline-flex items-center space-x-2 text-white hover:text-gray-300 transition-colors"
-                    whileHover={{ x: 5 }}
-                  >
-                    <span className="text-sm">
-                      {project.link.startsWith('http') ? 'Visit Site' : 'View Project'}
-                    </span>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </motion.a>
-                </div>
-              </div>
-            </motion.div>
+            <ProjectCard key={project.title} project={project} index={index} />
           ))}
         </div>
 
@@ -171,13 +287,21 @@ const Projects = () => {
           </p>
           <motion.a
             href="#contact"
-            className="inline-flex items-center space-x-2 text-white hover:text-gray-300 transition-colors"
+            className="inline-flex items-center space-x-2 text-white hover:text-blue-400 transition-colors magnetic"
+            data-cursor-text="Let's talk"
             whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.95 }}
           >
             <span>Let&apos;s build something together</span>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <motion.svg 
+              className="w-4 h-4" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+              whileHover={{ x: 3 }}
+            >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
+            </motion.svg>
           </motion.a>
         </motion.div>
       </div>
