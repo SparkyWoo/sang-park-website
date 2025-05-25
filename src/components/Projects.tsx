@@ -88,8 +88,8 @@ const statusColors = {
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-20 bg-gray-900/50">
-      <div className="container mx-auto px-4">
+    <section id="projects" className="py-24 bg-gray-900/30">
+      <div className="container-max section-padding">
         {/* Section Header - Clean and Simple */}
         <div className="text-center mb-16">
           <motion.h2 

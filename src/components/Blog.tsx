@@ -204,7 +204,7 @@ const Blog = ({ posts }: BlogProps) => {
           ))}
         </MasonryGrid>
 
-        {/* View all posts link */}
+        {/* View all posts button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -213,12 +213,12 @@ const Blog = ({ posts }: BlogProps) => {
           className="text-center"
         >
           <Link href="/blog">
-            <motion.span
-              className="inline-flex items-center space-x-2 text-white hover:text-blue-400 transition-colors"
+            <motion.div
+              className="inline-flex items-center space-x-2 px-6 py-3 border border-gray-700 rounded-lg text-white hover:border-gray-600 hover:bg-gray-900/40 transition-all duration-300"
               whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ y: 0 }}
             >
-              <span>View all posts</span>
+              <span>View All Posts</span>
               <motion.svg 
                 className="w-4 h-4" 
                 fill="none" 
@@ -228,7 +228,7 @@ const Blog = ({ posts }: BlogProps) => {
               >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </motion.svg>
-            </motion.span>
+            </motion.div>
           </Link>
         </motion.div>
       </div>

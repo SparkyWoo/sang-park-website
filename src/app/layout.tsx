@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
+import { Inter } from 'next/font/google';
 import "./globals.css";
 import ScrollTriggerProvider from "@/components/ScrollTriggerProvider";
 import SmoothScrollEngine from "@/components/SmoothScrollEngine";
 import ScrollOptimizer from "@/components/ScrollOptimizer";
 import SmartBreadcrumbs from "@/components/SmartBreadcrumbs";
-import PageMiniMap from "@/components/PageMiniMap";
-import { Analytics } from "@vercel/analytics/next";
+import Navigation from '@/components/Navigation';
+import { Analytics } from "@vercel/analytics/react";
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: "Sang Park - Product Engineer & Builder",
@@ -49,7 +52,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className="antialiased">
+      <body className={inter.className}>
         <SmoothScrollEngine enabled={true} duration={200}>
           <ScrollOptimizer 
             enabled={true}
@@ -57,6 +60,13 @@ export default function RootLayout({
             enableLayoutContainment={true}
           >
             <ScrollTriggerProvider>
+              <Navigation />
+              <SmartBreadcrumbs 
+                enabled={true}
+                position="top-right"
+                showProgress={true}
+                autoHide={true}
+              />
               {/* Phase 3: Simple Background for Fast LCP */}
               <div className="fixed inset-0 -z-10">
                 {/* Simple CSS gradient for fast loading */}
@@ -72,22 +82,6 @@ export default function RootLayout({
 
               {/* Main Content */}
               {children}
-
-              {/* Phase 2: Smart Navigation */}
-              <SmartBreadcrumbs 
-                enabled={true}
-                position="top-right"
-                showProgress={true}
-                autoHide={true}
-              />
-              <PageMiniMap 
-                enabled={true}
-                position="right"
-                showLabels={true}
-                showProgress={true}
-                autoHide={true}
-                compact={false}
-              />
             </ScrollTriggerProvider>
           </ScrollOptimizer>
         </SmoothScrollEngine>

@@ -28,7 +28,7 @@ export default function About() {
   return (
     <NarrativeSection speed={0.8}>
       <section id="about" className="py-20 bg-gray-800/30">
-        <div className="container mx-auto px-4">
+        <div className="container-max section-padding">
           <AnimationOrchestrator sequence="section" className="max-w-6xl mx-auto">
             {/* Section Header with Interactive Typography */}
             <ParallaxSection speed={0.4} direction="up">
@@ -52,7 +52,7 @@ export default function About() {
             </ParallaxSection>
 
             {/* Main Content Grid */}
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="grid lg:grid-cols-2 gap-16 items-start">
               {/* Bio Section with Enhanced Typography */}
               <RevealSection direction="left" delay={0.2}>
                 <AmbientAnimations type="floating" intensity={0.2} duration={8}>
