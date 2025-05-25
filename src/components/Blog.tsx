@@ -6,7 +6,6 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
 import { BlogPost } from '@/lib/blog';
-import MasonryGrid from './MasonryGrid';
 
 interface BlogProps {
   posts: BlogPost[];
@@ -61,10 +60,16 @@ const Blog = ({ posts }: BlogProps) => {
   const BlogCard = ({ post, index }: { post: BlogPost, index: number }) => {
     const cardRef = useRef<HTMLDivElement>(null);
 
+    // Truncate excerpt to ensure consistent card heights
+    const truncateText = (text: string, maxLength: number) => {
+      if (text.length <= maxLength) return text;
+      return text.substring(0, maxLength).trim() + '...';
+    };
+
     return (
       <motion.div
         ref={cardRef}
-        className="group"
+        className="group h-full"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -72,7 +77,7 @@ const Blog = ({ posts }: BlogProps) => {
       >
         <Link href={`/blog/${post.slug}`}>
           <motion.article 
-            className="bg-gray-900/40 border border-gray-800 rounded-lg p-6 h-full transition-all duration-300 hover:border-gray-700 cursor-pointer relative overflow-hidden"
+            className="bg-gray-900/40 border border-gray-800 rounded-lg p-6 h-full transition-all duration-300 hover:border-gray-700 cursor-pointer relative overflow-hidden flex flex-col"
             whileHover={{ 
               y: -5,
               boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3)",
@@ -86,7 +91,7 @@ const Blog = ({ posts }: BlogProps) => {
               initial={false}
             />
             
-            <div className="relative z-10">
+            <div className="relative z-10 flex flex-col h-full">
               {/* Date and reading time */}
               <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
                 <time dateTime={post.date}>
@@ -104,53 +109,58 @@ const Blog = ({ posts }: BlogProps) => {
                 </span>
               </div>
 
-              {/* Title with enhanced hover effect */}
+              {/* Title with consistent height */}
               <motion.h3 
-                className="text-xl font-light mb-3 text-white group-hover:text-blue-400 transition-colors line-clamp-2"
+                className="text-xl font-light mb-3 text-white group-hover:text-blue-400 transition-colors"
+                style={{ minHeight: '3.5rem', lineHeight: '1.75rem' }}
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
               >
-                {post.title}
+                {truncateText(post.title, 80)}
               </motion.h3>
               
-              {/* Excerpt */}
-              <p className="text-gray-400 mb-4 leading-relaxed line-clamp-3">
-                {post.excerpt}
-              </p>
+              {/* Excerpt with fixed height */}
+              <div className="flex-1 mb-4">
+                <p className="text-gray-400 leading-relaxed" style={{ minHeight: '4.5rem', lineHeight: '1.5rem' }}>
+                  {truncateText(post.excerpt, 120)}
+                </p>
+              </div>
 
-              {/* Tags with enhanced animations */}
-              {post.tags && post.tags.length > 0 && (
-                <motion.div 
-                  className="flex flex-wrap gap-2 mb-4"
-                  variants={{
-                    hover: {
-                      transition: {
-                        staggerChildren: 0.05,
-                      },
-                    },
-                  }}
-                  whileHover="hover"
-                >
-                  {post.tags.slice(0, 3).map((tag: string) => (
-                    <motion.span
-                      key={tag}
-                      className="px-2 py-1 text-xs bg-gray-800 text-gray-300 rounded border border-gray-700 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200"
-                      variants={{
-                        hover: {
-                          y: -2,
-                          scale: 1.05,
+              {/* Tags with consistent spacing */}
+              <div className="mb-4" style={{ minHeight: '2rem' }}>
+                {post.tags && post.tags.length > 0 && (
+                  <motion.div 
+                    className="flex flex-wrap gap-2"
+                    variants={{
+                      hover: {
+                        transition: {
+                          staggerChildren: 0.05,
                         },
-                      }}
-                    >
-                      {tag}
-                    </motion.span>
-                  ))}
-                </motion.div>
-              )}
+                      },
+                    }}
+                    whileHover="hover"
+                  >
+                    {post.tags.slice(0, 3).map((tag: string) => (
+                      <motion.span
+                        key={tag}
+                        className="px-2 py-1 text-xs bg-gray-800 text-gray-300 rounded border border-gray-700 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200"
+                        variants={{
+                          hover: {
+                            y: -2,
+                            scale: 1.05,
+                          },
+                        }}
+                      >
+                        {tag}
+                      </motion.span>
+                    ))}
+                  </motion.div>
+                )}
+              </div>
 
-              {/* Read more link */}
+              {/* Read more link - always at bottom */}
               <motion.div 
-                className="inline-flex items-center space-x-2 text-white hover:text-blue-400 transition-colors text-sm"
+                className="inline-flex items-center space-x-2 text-white hover:text-blue-400 transition-colors text-sm mt-auto"
                 whileHover={{ x: 5 }}
               >
                 <span>Read more</span>
@@ -194,15 +204,12 @@ const Blog = ({ posts }: BlogProps) => {
           </p>
         </motion.div>
 
-        {/* Masonry grid for blog posts */}
-        <MasonryGrid 
-          className="mb-12"
-          columnClassName="space-y-6"
-        >
+        {/* Regular grid for blog posts - ensures consistent alignment */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {posts.map((post, index) => (
             <BlogCard key={post.slug} post={post} index={index} />
           ))}
-        </MasonryGrid>
+        </div>
 
         {/* View all posts button */}
         <motion.div

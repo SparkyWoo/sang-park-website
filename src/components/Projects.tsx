@@ -75,8 +75,8 @@ const projects: Project[] = [
     description: 'Chrome extension for Tock reservations that automatically adds restaurant bookings to your calendar.',
     image: '/images/projects/addtocalendar.png',
     technologies: ['JavaScript', 'Chrome Extension API', 'Calendar API'],
-    link: '#',
-    status: 'Completed'
+    link: 'https://chromewebstore.google.com/detail/add-to-calendar/nnnijhodgdeliklkedjkkllglkgmmagk',
+    status: 'Live'
   }
 ];
 
