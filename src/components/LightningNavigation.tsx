@@ -290,6 +290,7 @@ const LightningNavigation = () => {
       >
         <motion.div
           className="bg-black/80 backdrop-blur-sm border border-gray-700/50 rounded-lg p-3 text-xs text-gray-400"
+          initial={{ backgroundColor: "rgba(0,0,0,0.8)" }}
           whileHover={{ scale: 1.05, backgroundColor: "rgba(0,0,0,0.9)" }}
           transition={{ duration: 0.2 }}
         >

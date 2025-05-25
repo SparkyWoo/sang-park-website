@@ -51,6 +51,9 @@ function InteractiveLetter({
         textShadow: '0 0 20px rgba(96, 165, 250, 0.8)',
         filter: 'brightness(1.3) saturate(1.2)',
       }}
+      initial={{
+        filter: 'brightness(1) saturate(1)',
+      }}
       transition={{ 
         duration: 0.2,
         type: "spring",

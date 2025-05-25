@@ -186,7 +186,7 @@ const ParticleSystem: React.FC<ParticleSystemProps> = ({
     // }
 
     animationIdRef.current = requestAnimationFrame(render);
-  }, [updateParticle, colors, interactive]);
+  }, [updateParticle]);
 
   // Handle mouse movement
   const handleMouseMove = useCallback((event: MouseEvent) => {
