@@ -23,7 +23,7 @@
     "gray-matter": "^4.0.3",
     "gsap": "^3.13.0",
     "lottie-react": "^2.4.1",
-    "next": "15.1.8",
+    "next": "^15.1.9",
     "next-mdx-remote": "^5.0.0",
     "prismjs": "^1.30.0",
     "react": "^19.0.0",
