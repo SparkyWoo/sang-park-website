@@ -21,7 +21,7 @@ export default function Hero() {
     return () => clearTimeout(timer);
   }, []);
 
-  const roles = ['Product Engineer', 'Builder', 'Creator', 'Problem Solver'];
+  const roles = ['Product Manager', 'Builder', 'Creator', 'Problem Solver'];
 
   return (
     <ImmersiveSection speed={0.6}>
@@ -33,7 +33,7 @@ export default function Hero() {
 
         {/* Gradient Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800 z-0" />
-        
+
         {/* Animated gradient overlay */}
         <AmbientAnimations type="glow" intensity={0.4} duration={12}>
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-cyan-500/10 z-1" />
@@ -61,7 +61,7 @@ export default function Hero() {
           <FloatingElement speed={0.1}>
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/5 to-purple-500/5 blur-3xl scale-150" />
           </FloatingElement>
-          
+
           {/* Interactive Name - Phase 2 */}
           <div className="mb-6" style={{ contain: 'layout style' }}>
             <HoverTilt intensity={0.2}>
@@ -70,13 +70,13 @@ export default function Hero() {
                 animate={nameRevealed ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 1, delay: 0.5 }}
                 className="text-6xl md:text-8xl font-bold text-white mb-2"
-                style={{ 
+                style={{
                   contain: 'layout style',
                   willChange: 'transform'
                 }}
               >
                 <FloatingElement speed={0.15}>
-                  <InteractiveTitle 
+                  <InteractiveTitle
                     variant="hero"
                     className="perspective-1000"
                   >
@@ -85,7 +85,7 @@ export default function Hero() {
                 </FloatingElement>
               </motion.div>
             </HoverTilt>
-            
+
             {/* Subtitle with dynamic font weight and cursor following */}
             <AmbientAnimations type="floating" intensity={0.2} duration={8}>
               <motion.div
@@ -93,7 +93,7 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 1.5 }}
                 className="text-xl md:text-2xl text-gray-300 mb-8"
-                style={{ 
+                style={{
                   contain: 'layout style',
                   willChange: 'transform'
                 }}
@@ -103,7 +103,7 @@ export default function Hero() {
                     <FollowingText strength={0.03}>
                       I&apos;m a{' '}
                       <span className="text-blue-400 font-semibold min-w-[200px] inline-block text-left">
-                        <WaveTypewriter 
+                        <WaveTypewriter
                           texts={roles}
                           speed={120}
                           className="text-blue-400"
@@ -123,7 +123,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 2 }}
               className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed"
-              style={{ 
+              style={{
                 contain: 'layout style',
                 willChange: 'transform',
                 minHeight: '4rem'
@@ -132,7 +132,7 @@ export default function Hero() {
               <FloatingElement speed={0.05}>
                 <ProximityResponsiveText>
                   <FollowingText strength={0.02}>
-                    I build products that solve real problems. From concept to launch, 
+                    I build products that solve real problems. From concept to launch,
                     I focus on execution speed and user impact.
                   </FollowingText>
                 </ProximityResponsiveText>
@@ -146,21 +146,21 @@ export default function Hero() {
               <AmbientAnimations type="breathing" intensity={0.05} duration={12}>
                 <motion.a
                   href="#projects"
-                  initial={{ 
-                    opacity: 0, 
-                    scale: 0, 
+                  initial={{
+                    opacity: 0,
+                    scale: 0,
                     rotate: 180,
                     boxShadow: "0 0px 0px rgba(59, 130, 246, 0)"
                   }}
                   animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  transition={{ 
-                    duration: 0.7, 
+                  transition={{
+                    duration: 0.7,
                     delay: 2.5,
                     type: "spring",
                     stiffness: 200,
                     damping: 10
                   }}
-                  whileHover={{ 
+                  whileHover={{
                     scale: 1.05,
                     boxShadow: "0 10px 30px rgba(59, 130, 246, 0.3)",
                     transition: { duration: 0.2 }
@@ -177,22 +177,22 @@ export default function Hero() {
               <AmbientAnimations type="drift" intensity={0.1} duration={15}>
                 <motion.a
                   href="#contact"
-                  initial={{ 
-                    opacity: 0, 
-                    scale: 0, 
+                  initial={{
+                    opacity: 0,
+                    scale: 0,
                     rotate: -180,
                     backgroundColor: "rgba(0, 0, 0, 0)",
                     borderColor: "rgb(75, 85, 99)"
                   }}
                   animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  transition={{ 
-                    duration: 0.7, 
+                  transition={{
+                    duration: 0.7,
                     delay: 2.7,
                     type: "spring",
                     stiffness: 200,
                     damping: 10
                   }}
-                  whileHover={{ 
+                  whileHover={{
                     scale: 1.05,
                     backgroundColor: "rgba(59, 130, 246, 0.1)",
                     borderColor: "#60a5fa",

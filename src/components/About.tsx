@@ -37,7 +37,7 @@ export default function About() {
                   <FloatingElement speed={0.5}>
                     <InViewMorpher>
                       <SectionResponsiveText>
-                        <InteractiveTitle 
+                        <InteractiveTitle
                           variant="section"
                           className="text-4xl md:text-5xl font-bold text-white mb-4"
                         >
@@ -76,8 +76,8 @@ export default function About() {
                       </HoverTilt>
                       <HighlightText radius={120}>
                         <p className="text-gray-300 leading-relaxed mb-6">
-                          I&apos;m a product engineer who believes in execution over perfection. 
-                          While others debate, I build. My approach is simple: identify real problems, 
+                          I&apos;m a product manager who believes in execution over perfection.
+                          While others debate, I build. My approach is simple: identify real problems,
                           ship fast, iterate based on feedback.
                         </p>
                       </HighlightText>
@@ -91,8 +91,8 @@ export default function About() {
                     >
                       <HighlightText radius={120}>
                         <p className="text-gray-300 leading-relaxed mb-6">
-                          From LeetProduct (Leetcode for PMs) to VariantAB (AI-powered LinkedIn optimization), 
-                          I focus on products that solve immediate pain points. Speed is my competitive advantage—I can 
+                          From LeetProduct (Leetcode for PMs) to VariantAB (AI-powered LinkedIn optimization),
+                          I focus on products that solve immediate pain points. Speed is my competitive advantage—I can
                           go from idea to launched product faster than most teams can write a spec.
                         </p>
                       </HighlightText>
@@ -106,8 +106,8 @@ export default function About() {
                     >
                       <HighlightText radius={120}>
                         <p className="text-gray-300 leading-relaxed">
-                          When I&apos;m not building, I&apos;m angel investing in early-stage startups, 
-                          helping other builders turn their ideas into reality. I believe the best products 
+                          When I&apos;m not building, I&apos;m angel investing in early-stage startups,
+                          helping other builders turn their ideas into reality. I believe the best products
                           come from understanding real user problems, not following trends.
                         </p>
                       </HighlightText>
@@ -138,21 +138,21 @@ export default function About() {
                         </HoverResponsiveText>
                       </FloatingElement>
                     </motion.div>
-                    
+
                     <div className="grid grid-cols-2 gap-4">
                       {skills.map((skill, index) => (
                         <HoverTilt key={skill} intensity={0.4}>
                           <motion.div
                             initial={{ opacity: 0, scale: 0.8 }}
                             whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ 
-                              duration: 0.5, 
+                            transition={{
+                              duration: 0.5,
                               delay: index * 0.1,
                               type: "spring",
                               stiffness: 200
                             }}
                             viewport={{ once: true }}
-                            whileHover={{ 
+                            whileHover={{
                               scale: 1.05,
                               backgroundColor: "rgba(59, 130, 246, 0.1)",
                               transition: { duration: 0.2 }
@@ -193,7 +193,7 @@ export default function About() {
                     <HoverTilt key={stat.label} intensity={0.5}>
                       <AmbientAnimations type="breathing" intensity={0.05} duration={6 + index * 2}>
                         <motion.div
-                          whileHover={{ 
+                          whileHover={{
                             scale: 1.05,
                             transition: { duration: 0.2 }
                           }}

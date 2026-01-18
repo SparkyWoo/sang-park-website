@@ -11,9 +11,9 @@ import { Analytics } from "@vercel/analytics/react";
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Sang Park - Product Engineer & Builder",
-  description: "Personal website of Sang Park - Product Engineer, Builder, and Creator. Showcasing projects, blog posts, and photography.",
-  keywords: ["Sang Park", "Product Engineer", "Builder", "Developer", "Photography", "Blog"],
+  title: "Sang Park - Product Manager & Builder",
+  description: "Personal website of Sang Park - Product Manager, Builder, and Creator. Showcasing projects, blog posts, and photography.",
+  keywords: ["Sang Park", "Product Manager", "Builder", "Developer", "Photography", "Blog"],
   authors: [{ name: "Sang Park" }],
   creator: "Sang Park",
   icons: {
@@ -33,16 +33,16 @@ export const metadata: Metadata = {
   },
   manifest: '/site.webmanifest',
   openGraph: {
-    title: "Sang Park - Product Engineer & Builder",
-    description: "Personal website of Sang Park - Product Engineer, Builder, and Creator.",
+    title: "Sang Park - Product Manager & Builder",
+    description: "Personal website of Sang Park - Product Manager, Builder, and Creator.",
     url: "https://www.sangpark.us",
     siteName: "Sang Park",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sang Park - Product Engineer & Builder",
-    description: "Personal website of Sang Park - Product Engineer, Builder, and Creator.",
+    title: "Sang Park - Product Manager & Builder",
+    description: "Personal website of Sang Park - Product Manager, Builder, and Creator.",
   },
 };
 
@@ -61,14 +61,14 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <SmoothScrollEngine enabled={true} duration={200}>
-          <ScrollOptimizer 
+          <ScrollOptimizer
             enabled={true}
             enableGPUAcceleration={true}
             enableLayoutContainment={true}
           >
             <ScrollTriggerProvider>
               <Navigation />
-              <SmartBreadcrumbs 
+              <SmartBreadcrumbs
                 enabled={true}
                 position="top-right"
                 showProgress={true}
@@ -77,7 +77,7 @@ export default function RootLayout({
               {/* Phase 3: Simple Background for Fast LCP */}
               <div className="fixed inset-0 -z-10">
                 {/* Simple CSS gradient for fast loading */}
-                <div 
+                <div
                   className="absolute inset-0 opacity-20"
                   style={{
                     background: 'linear-gradient(135deg, #1e40af 0%, #7c3aed 50%, #db2777 100%)',
@@ -92,7 +92,7 @@ export default function RootLayout({
             </ScrollTriggerProvider>
           </ScrollOptimizer>
         </SmoothScrollEngine>
-        
+
         {/* Vercel Analytics */}
         <Analytics />
       </body>
