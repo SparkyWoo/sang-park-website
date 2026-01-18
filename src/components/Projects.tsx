@@ -27,7 +27,15 @@ const projects: Project[] = [
     description: 'AI-powered fake Amazon review detector. Instantly analyze product reviews and get trust scores before you buy.',
     image: '/images/projects/ratebud.png',
     technologies: ['Next.js', 'TypeScript', 'OpenAI API', 'Tailwind CSS'],
-    link: 'https://ratebud.com',
+    link: 'https://ratebud.ai',
+    status: 'Live'
+  },
+  {
+    title: 'BlendFace',
+    description: 'AI-powered face blending app. See what your baby might look like, blend celebrity faces, or merge photos with friends for stunning, realistic results.',
+    image: '/images/projects/blendface.png',
+    technologies: ['React Native', 'TypeScript', 'Fal.ai', 'RevenueCat'],
+    link: 'https://www.blendface.com/',
     status: 'Live'
   },
   {
@@ -100,7 +108,7 @@ export default function Projects() {
       <div className="container-max section-padding">
         {/* Section Header - Clean and Simple */}
         <div className="text-center mb-16">
-          <motion.h2 
+          <motion.h2
             className="text-4xl md:text-5xl font-bold text-white mb-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -109,14 +117,14 @@ export default function Projects() {
           >
             Featured Projects
           </motion.h2>
-          <motion.p 
+          <motion.p
             className="text-xl text-gray-400 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            A collection of products I&apos;ve built, from concept to launch. 
+            A collection of products I&apos;ve built, from concept to launch.
             Each project represents a unique challenge and learning experience.
           </motion.p>
         </div>
@@ -160,7 +168,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             height={250}
             className="w-full h-48 object-cover"
           />
-          
+
           {/* Overlay */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -168,7 +176,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             transition={{ duration: 0.3 }}
             className="absolute inset-0 bg-gradient-to-t from-blue-600/20 via-transparent to-transparent"
           />
-          
+
           {/* Status Badge */}
           <div className="absolute top-4 right-4">
             <span className={`px-3 py-1 rounded-full text-xs font-semibold text-white ${statusColors[project.status]}`}>
@@ -183,7 +191,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors duration-300">
           {project.title}
         </h3>
-        
+
         <p className="text-gray-400 mb-4 flex-1 leading-relaxed">
           {project.description}
         </p>
@@ -206,7 +214,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ 
+            whileHover={{
               scale: 1.02,
               boxShadow: "0 8px 25px rgba(59, 130, 246, 0.4)",
             }}
