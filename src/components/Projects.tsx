@@ -23,6 +23,14 @@ const projects: Project[] = [
     status: 'Live'
   },
   {
+    title: 'RateBud',
+    description: 'AI-powered fake Amazon review detector. Instantly analyze product reviews and get trust scores before you buy.',
+    image: '/images/projects/ratebud.png',
+    technologies: ['Next.js', 'TypeScript', 'OpenAI API', 'Tailwind CSS'],
+    link: 'https://ratebud.com',
+    status: 'Live'
+  },
+  {
     title: 'VariantAB',
     description: 'AI-powered LinkedIn post analysis tool that helps optimize content performance and engagement.',
     image: '/images/projects/variantab.png',
